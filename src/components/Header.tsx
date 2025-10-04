@@ -23,14 +23,18 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-primary text-primary-foreground shadow-lg">
+    <header className="bg-primary text-primary-foreground shadow-lg">
       <div className="max-w-7xl mx-auto">
         {/* Top bar with logo and institution info */}
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4 border-b border-white/10">
           <div className="flex items-center gap-4">
-            {/* Logo placeholder - user should add their actual logo */}
-            <div className="w-16 h-16 bg-white/10 rounded-lg flex items-center justify-center text-xs font-bold">
-              LOGO
+            {/* Somaiya Vidyavihar Logo */}
+            <div className="w-16 h-16 rounded-lg overflow-hidden flex items-center justify-center bg-white">
+              <img 
+                src="/somaiya-logo.png" 
+                alt="Somaiya Vidyavihar Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="hidden md:block">
               <p className="text-sm font-semibold tracking-wide">SOMAIYA VIDYAVIHAR</p>

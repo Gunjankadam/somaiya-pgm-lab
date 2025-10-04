@@ -61,11 +61,12 @@ const experiments = [
 const Experiments = () => {
   const navigate = useNavigate();
 
-  const handleExperimentClick = (title: string) => {
+  const handleExperimentClick = (title: string, index: number) => {
     toast.success(`Starting ${title} experiment`, {
       description: "Loading experiment interface...",
     });
-    // In a real application, this would navigate to the specific experiment page
+    // Navigate to the specific experiment page
+    navigate(`/experiments/experiment${index + 1}`);
   };
 
   return (
@@ -89,7 +90,7 @@ const Experiments = () => {
               title={experiment.title}
               description={experiment.description}
               icon={experiment.icon}
-              onClick={() => handleExperimentClick(experiment.title)}
+              onClick={() => handleExperimentClick(experiment.title, index)}
             />
           ))}
         </div>

@@ -27,7 +27,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/about">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button size="lg" className="border-2 border-white text-white hover:bg-white hover:text-primary bg-transparent">
                   Learn More
                 </Button>
               </Link>
@@ -40,38 +40,44 @@ const Index = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent">
-              <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
-                <BookOpen className="w-10 h-10 text-accent" />
+            <Link to="/theory" className="block">
+              <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent cursor-pointer">
+                <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
+                  <BookOpen className="w-10 h-10 text-accent" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Comprehensive Theory</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Deep dive into the theoretical foundations of probabilistic graphical models
+                  with structured learning materials and mathematical proofs.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Comprehensive Theory</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Deep dive into the theoretical foundations of probabilistic graphical models
-                with structured learning materials and mathematical proofs.
-              </p>
-            </div>
+            </Link>
 
-            <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent">
-              <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
-                <FlaskConical className="w-10 h-10 text-accent" />
+            <Link to="/experiments" className="block">
+              <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent cursor-pointer">
+                <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
+                  <FlaskConical className="w-10 h-10 text-accent" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Interactive Experiments</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  8 carefully designed experiments covering everything from probability theory
+                  to hidden Markov models with practical implementations.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Interactive Experiments</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                8 carefully designed experiments covering everything from probability theory
-                to hidden Markov models with practical implementations.
-              </p>
-            </div>
+            </Link>
 
-            <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent">
-              <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
-                <GraduationCap className="w-10 h-10 text-accent" />
+            <Link to="/papers" className="block">
+              <div className="content-section text-center group hover:border-accent transition-colors border-2 border-transparent cursor-pointer">
+                <div className="inline-block p-4 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
+                  <GraduationCap className="w-10 h-10 text-accent" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Research Projects</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Showcase of student research projects and academic papers in the field
+                  of probabilistic graphical models and machine learning.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Research Projects</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Showcase of student research projects and academic papers in the field
-                of probabilistic graphical models and machine learning.
-              </p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>

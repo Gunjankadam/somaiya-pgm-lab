@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Objectives from "./pages/Objectives";
 import Theory from "./pages/Theory";
 import Experiments from "./pages/Experiments";
+import Experiment1 from "./pages/experiments/Experiment1";
 import BayesServer from "./pages/BayesServer";
 import Papers from "./pages/Papers";
 import Feedback from "./pages/Feedback";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/objectives" element={<Objectives />} />
           <Route path="/theory" element={<Theory />} />
           <Route path="/experiments" element={<Experiments />} />
+          <Route path="/experiments/experiment1" element={<Experiment1 />} />
           <Route path="/bayes-server" element={<BayesServer />} />
           <Route path="/papers" element={<Papers />} />
           <Route path="/feedback" element={<Feedback />} />

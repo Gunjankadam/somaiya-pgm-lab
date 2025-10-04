@@ -4,23 +4,19 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { Target, CheckCircle2 } from "lucide-react";
 
 const objectives = [
-  "Understand the fundamental concepts of probability theory and graph theory as they apply to probabilistic graphical models",
-  "Master the representation and inference techniques for Bayesian networks and Markov networks",
-  "Learn to model temporal and sequential data using Hidden Markov Models and Dynamic Bayesian Networks",
-  "Develop skills in parameter learning using Maximum Likelihood Estimation and Expectation-Maximization algorithms",
-  "Apply decision theory and influence diagrams to solve decision-making problems under uncertainty",
-  "Implement and analyze various PGM algorithms using modern software tools like Bayes Server",
-  "Design and execute experiments to validate PGM models on real-world datasets",
-  "Critically evaluate research papers and current developments in the field of probabilistic graphical models",
+  "To give comprehensive introduction of probabilistic graphical models.",
+  "To make inferences, learning, actions and decisions while applying these models.",
+  "To introduce real-world trade offs when using probabilistic graphical models in practice.",
+  "To develop the knowledge and skills necessary to apply these models to solve real world problems"
 ];
 
 const learningOutcomes = [
-  "Build and visualize Bayesian networks for complex real-world scenarios",
-  "Perform exact and approximate inference in graphical models",
-  "Implement learning algorithms for parameter and structure estimation",
-  "Apply Hidden Markov Models to sequence analysis problems",
-  "Use decision networks for optimal decision-making under uncertainty",
-  "Conduct comprehensive case studies applying PGM techniques to practical problems",
+  "Describe basic concepts of probabilistic graphical modelling",
+  "Model and extract inference from various graphical models like Bayesian Network model and inference.",
+  "Perform learning and take actions and decisions using probabilistic graphical models - Markov Model.",
+  "Devise learning and take actions and decisions using probabilistic graphical models - Hidden Markov Model",
+  "Represent real world problems using graphical models; design inference algorithms; and learn the structure of the graphical model from data",
+  "Design real life applications using probabilistic graphical models."
 ];
 
 const Objectives = () => {
@@ -71,35 +67,6 @@ const Objectives = () => {
           </div>
         </div>
 
-        <div className="content-section mt-6">
-          <h2 className="text-2xl font-semibold mb-4">Assessment Methods</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">Theory Examination (40%)</h3>
-              <p className="text-muted-foreground text-sm">
-                Written examination testing conceptual understanding and problem-solving skills
-              </p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">Practical Experiments (30%)</h3>
-              <p className="text-muted-foreground text-sm">
-                Hands-on implementation and analysis of PGM algorithms
-              </p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">Course Project (20%)</h3>
-              <p className="text-muted-foreground text-sm">
-                Independent research project applying PGM techniques to a real-world problem
-              </p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">Continuous Assessment (10%)</h3>
-              <p className="text-muted-foreground text-sm">
-                Quizzes, assignments, and class participation
-              </p>
-            </div>
-          </div>
-        </div>
       </main>
 
       <Footer />
