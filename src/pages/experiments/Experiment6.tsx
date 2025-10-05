@@ -23,6 +23,15 @@ interface MLEParameters {
   lambda?: number;
   p?: number;
   n?: number;
+  // Multi-class parameters for GMM and multi-class normal
+  mean1?: number;
+  variance1?: number;
+  weight1?: number;
+  mean2?: number;
+  variance2?: number;
+  weight2?: number;
+  mean3?: number;
+  variance3?: number;
   likelihood: number;
   logLikelihood: number;
 }
@@ -34,6 +43,9 @@ interface TestCase {
   data: DataPoint[];
   trueParams: { [key: string]: number };
   features: string[];
+  isMultiClass?: boolean;
+  nClasses?: number;
+  classLabels?: number[];
 }
 
 const Experiment6 = () => {
@@ -115,6 +127,33 @@ const Experiment6 = () => {
       data: [],
       trueParams: { lambda: 0.5 },
       features: ['lambda']
+    },
+    {
+      name: "Gaussian Mixture Model",
+      description: "Estimate parameters for 2-component Gaussian mixture",
+      distribution: "gmm",
+      data: [],
+      trueParams: { 
+        mean1: 2, variance1: 1, weight1: 0.6,
+        mean2: 8, variance2: 1.5, weight2: 0.4
+      },
+      features: ['mean1', 'variance1', 'weight1', 'mean2', 'variance2', 'weight2'],
+      isMultiClass: true,
+      nClasses: 2
+    },
+    {
+      name: "Multi-Class Normal",
+      description: "Estimate parameters for 3-class normal distributions",
+      distribution: "multiclass_normal",
+      data: [],
+      trueParams: { 
+        mean1: 1, variance1: 0.5,
+        mean2: 5, variance2: 1,
+        mean3: 9, variance3: 0.8
+      },
+      features: ['mean1', 'variance1', 'mean2', 'variance2', 'mean3', 'variance3'],
+      isMultiClass: true,
+      nClasses: 3
     }
   ];
 
@@ -122,9 +161,11 @@ const Experiment6 = () => {
   const generateSampleData = (testCase: TestCase, size: number): DataPoint[] => {
     const data: DataPoint[] = [];
     const { distribution, trueParams } = testCase;
+    const classLabels: number[] = [];
 
     for (let i = 0; i < size; i++) {
       let value: number;
+      let classLabel = 0;
       
       switch (distribution) {
         case 'normal':
@@ -162,11 +203,62 @@ const Experiment6 = () => {
           // Exponential distribution using inverse transform
           value = -Math.log(1 - Math.random()) / trueParams.lambda!;
           break;
+        case 'gmm':
+          // Gaussian Mixture Model - 2 components
+          const rand = Math.random();
+          if (rand < trueParams.weight1!) {
+            // Component 1
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            value = trueParams.mean1! + Math.sqrt(trueParams.variance1!) * z0;
+            classLabel = 0;
+          } else {
+            // Component 2
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            value = trueParams.mean2! + Math.sqrt(trueParams.variance2!) * z0;
+            classLabel = 1;
+          }
+          break;
+        case 'multiclass_normal':
+          // Multi-class normal - 3 classes with equal probability
+          const classRand = Math.random();
+          if (classRand < 0.33) {
+            // Class 1
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            value = trueParams.mean1! + Math.sqrt(trueParams.variance1!) * z0;
+            classLabel = 0;
+          } else if (classRand < 0.66) {
+            // Class 2
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            value = trueParams.mean2! + Math.sqrt(trueParams.variance2!) * z0;
+            classLabel = 1;
+          } else {
+            // Class 3
+            const u1 = Math.random();
+            const u2 = Math.random();
+            const z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+            value = trueParams.mean3! + Math.sqrt(trueParams.variance3!) * z0;
+            classLabel = 2;
+          }
+          break;
         default:
           value = Math.random();
       }
       
       data.push({ x: i, y: value });
+      classLabels.push(classLabel);
+    }
+    
+    // Store class labels in test case for multi-class scenarios
+    if (testCase.isMultiClass) {
+      testCase.classLabels = classLabels;
     }
     
     return data;
@@ -287,6 +379,110 @@ const Experiment6 = () => {
     return { lambda, likelihood, logLikelihood };
   };
 
+  // Calculate likelihood for Gaussian Mixture Model
+  const calculateGMMLikelihood = (data: DataPoint[], params: any): number => {
+    let likelihood = 1;
+    
+    for (const point of data) {
+      const x = point.y;
+      const prob1 = params.weight1 * (1 / Math.sqrt(2 * Math.PI * params.variance1)) * 
+                   Math.exp(-0.5 * Math.pow(x - params.mean1, 2) / params.variance1);
+      const prob2 = params.weight2 * (1 / Math.sqrt(2 * Math.PI * params.variance2)) * 
+                   Math.exp(-0.5 * Math.pow(x - params.mean2, 2) / params.variance2);
+      likelihood *= (prob1 + prob2);
+    }
+    
+    return likelihood;
+  };
+
+  // Calculate likelihood for multi-class normal
+  const calculateMultiClassNormalLikelihood = (data: DataPoint[], classLabels: number[], params: any): number => {
+    let likelihood = 1;
+    
+    for (let i = 0; i < data.length; i++) {
+      const point = data[i];
+      const classLabel = classLabels[i];
+      const x = point.y;
+      
+      let prob: number;
+      if (classLabel === 0) {
+        prob = (1 / Math.sqrt(2 * Math.PI * params.variance1)) * 
+               Math.exp(-0.5 * Math.pow(x - params.mean1, 2) / params.variance1);
+      } else if (classLabel === 1) {
+        prob = (1 / Math.sqrt(2 * Math.PI * params.variance2)) * 
+               Math.exp(-0.5 * Math.pow(x - params.mean2, 2) / params.variance2);
+      } else {
+        prob = (1 / Math.sqrt(2 * Math.PI * params.variance3)) * 
+               Math.exp(-0.5 * Math.pow(x - params.mean3, 2) / params.variance3);
+      }
+      likelihood *= prob;
+    }
+    
+    return likelihood;
+  };
+
+  // MLE estimation for Gaussian Mixture Model
+  const estimateGMMLE = (data: DataPoint[]): MLEParameters => {
+    const values = data.map(d => d.y);
+    const n = data.length;
+    
+    // Simple EM-like estimation (simplified)
+    // Initialize with k-means-like approach
+    const sortedValues = [...values].sort((a, b) => a - b);
+    const mid = Math.floor(n / 2);
+    
+    // Initial estimates
+    let mean1 = sortedValues.slice(0, mid).reduce((sum, val) => sum + val, 0) / mid;
+    let mean2 = sortedValues.slice(mid).reduce((sum, val) => sum + val, 0) / (n - mid);
+    
+    // Calculate variances
+    let variance1 = sortedValues.slice(0, mid).reduce((sum, val) => sum + Math.pow(val - mean1, 2), 0) / mid;
+    let variance2 = sortedValues.slice(mid).reduce((sum, val) => sum + Math.pow(val - mean2, 2), 0) / (n - mid);
+    
+    // Calculate weights
+    const weight1 = mid / n;
+    const weight2 = (n - mid) / n;
+    
+    const params = { mean1, variance1, weight1, mean2, variance2, weight2 };
+    const likelihood = calculateGMMLikelihood(data, params);
+    const logLikelihood = Math.log(likelihood);
+    
+    return { 
+      mean1, variance1, weight1, 
+      mean2, variance2, weight2, 
+      likelihood, logLikelihood 
+    };
+  };
+
+  // MLE estimation for multi-class normal
+  const estimateMultiClassNormalMLE = (data: DataPoint[], classLabels: number[]): MLEParameters => {
+    const n = data.length;
+    
+    // Separate data by class
+    const class0Data = data.filter((_, i) => classLabels[i] === 0).map(d => d.y);
+    const class1Data = data.filter((_, i) => classLabels[i] === 1).map(d => d.y);
+    const class2Data = data.filter((_, i) => classLabels[i] === 2).map(d => d.y);
+    
+    // Calculate MLE estimates for each class
+    const mean1 = class0Data.reduce((sum, val) => sum + val, 0) / class0Data.length;
+    const variance1 = class0Data.reduce((sum, val) => sum + Math.pow(val - mean1, 2), 0) / class0Data.length;
+    
+    const mean2 = class1Data.reduce((sum, val) => sum + val, 0) / class1Data.length;
+    const variance2 = class1Data.reduce((sum, val) => sum + Math.pow(val - mean2, 2), 0) / class1Data.length;
+    
+    const mean3 = class2Data.reduce((sum, val) => sum + val, 0) / class2Data.length;
+    const variance3 = class2Data.reduce((sum, val) => sum + Math.pow(val - mean3, 2), 0) / class2Data.length;
+    
+    const params = { mean1, variance1, mean2, variance2, mean3, variance3 };
+    const likelihood = calculateMultiClassNormalLikelihood(data, classLabels, params);
+    const logLikelihood = Math.log(likelihood);
+    
+    return { 
+      mean1, variance1, mean2, variance2, mean3, variance3, 
+      likelihood, logLikelihood 
+    };
+  };
+
   // Run MLE estimation
   const runMLEEstimation = () => {
     setIsEstimating(true);
@@ -337,6 +533,12 @@ const Experiment6 = () => {
         case 'exponential':
           params = estimateExponentialMLE(data);
           break;
+        case 'gmm':
+          params = estimateGMMLE(data);
+          break;
+        case 'multiclass_normal':
+          params = estimateMultiClassNormalMLE(data, testCase.classLabels || []);
+          break;
         default:
           params = { likelihood: 0, logLikelihood: 0 };
       }
@@ -375,6 +577,14 @@ const Experiment6 = () => {
             params.likelihood = calculateExponentialLikelihood(data, params.lambda!);
             params.logLikelihood = Math.log(params.likelihood);
             break;
+          case 'gmm':
+            params.likelihood = calculateGMMLikelihood(data, params);
+            params.logLikelihood = Math.log(params.likelihood);
+            break;
+          case 'multiclass_normal':
+            params.likelihood = calculateMultiClassNormalLikelihood(data, testCase.classLabels || [], params);
+            params.logLikelihood = Math.log(params.likelihood);
+            break;
         }
       }
       
@@ -408,6 +618,12 @@ const Experiment6 = () => {
         case 'exponential':
           params = estimateExponentialMLE(data);
           break;
+        case 'gmm':
+          params = estimateGMMLE(data);
+          break;
+        case 'multiclass_normal':
+          params = estimateMultiClassNormalMLE(data, testCase.classLabels || []);
+          break;
         default:
           params = { likelihood: 0, logLikelihood: 0 };
       }
@@ -427,6 +643,20 @@ const Experiment6 = () => {
       } else if (testCase.distribution === 'exponential') {
         const lambdaError = Math.abs((params.lambda || 0) - testCase.trueParams.lambda) / testCase.trueParams.lambda;
         accuracy = 100 - lambdaError * 100;
+      } else if (testCase.distribution === 'gmm') {
+        const mean1Error = Math.abs((params.mean1 || 0) - testCase.trueParams.mean1) / testCase.trueParams.mean1;
+        const mean2Error = Math.abs((params.mean2 || 0) - testCase.trueParams.mean2) / testCase.trueParams.mean2;
+        const var1Error = Math.abs((params.variance1 || 0) - testCase.trueParams.variance1) / testCase.trueParams.variance1;
+        const var2Error = Math.abs((params.variance2 || 0) - testCase.trueParams.variance2) / testCase.trueParams.variance2;
+        accuracy = 100 - (mean1Error + mean2Error + var1Error + var2Error) * 25;
+      } else if (testCase.distribution === 'multiclass_normal') {
+        const mean1Error = Math.abs((params.mean1 || 0) - testCase.trueParams.mean1) / testCase.trueParams.mean1;
+        const mean2Error = Math.abs((params.mean2 || 0) - testCase.trueParams.mean2) / testCase.trueParams.mean2;
+        const mean3Error = Math.abs((params.mean3 || 0) - testCase.trueParams.mean3) / testCase.trueParams.mean3;
+        const var1Error = Math.abs((params.variance1 || 0) - testCase.trueParams.variance1) / testCase.trueParams.variance1;
+        const var2Error = Math.abs((params.variance2 || 0) - testCase.trueParams.variance2) / testCase.trueParams.variance2;
+        const var3Error = Math.abs((params.variance3 || 0) - testCase.trueParams.variance3) / testCase.trueParams.variance3;
+        accuracy = 100 - (mean1Error + mean2Error + mean3Error + var1Error + var2Error + var3Error) * 16.67;
       }
       
       results[testCase.name] = `${Math.max(0, accuracy).toFixed(1)}%`;
@@ -641,14 +871,46 @@ const Experiment6 = () => {
                           Sample size: {currentData.length} | 
                           Mean: {(currentData.reduce((sum, d) => sum + d.y, 0) / currentData.length).toFixed(3)} | 
                           Std Dev: {Math.sqrt(currentData.reduce((sum, d) => sum + Math.pow(d.y - currentData.reduce((s, d) => s + d.y, 0) / currentData.length, 2), 0) / currentData.length).toFixed(3)}
+                          {testCases[selectedTestCase].isMultiClass && (
+                            <span> | Classes: {testCases[selectedTestCase].nClasses}</span>
+                          )}
                         </div>
+                        
+                        {/* Multi-class data visualization */}
+                        {testCases[selectedTestCase].isMultiClass && testCases[selectedTestCase].classLabels && (
+                          <div className="mb-4">
+                            <h5 className="text-sm font-medium mb-2">Class Distribution:</h5>
+                            <div className="flex gap-2 flex-wrap">
+                              {Array.from({ length: testCases[selectedTestCase].nClasses || 0 }, (_, classId) => {
+                                const classCount = testCases[selectedTestCase].classLabels?.filter(label => label === classId).length || 0;
+                                const percentage = (classCount / currentData.length * 100).toFixed(1);
+                                return (
+                                  <Badge key={classId} variant="secondary" className="text-xs">
+                                    Class {classId}: {classCount} ({percentage}%)
+                                  </Badge>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                        
                         <div className="h-32 overflow-y-auto">
                           <div className="grid grid-cols-10 gap-1">
-                            {currentData.slice(0, 100).map((point, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
-                                {point.y.toFixed(2)}
-                              </Badge>
-                            ))}
+                            {currentData.slice(0, 100).map((point, index) => {
+                              const classLabel = testCases[selectedTestCase].classLabels?.[index];
+                              const isMultiClass = testCases[selectedTestCase].isMultiClass;
+                              
+                              return (
+                                <Badge 
+                                  key={index} 
+                                  variant={isMultiClass ? (classLabel === 0 ? "default" : classLabel === 1 ? "secondary" : "outline") : "outline"} 
+                                  className="text-xs"
+                                >
+                                  {point.y.toFixed(2)}
+                                  {isMultiClass && <span className="ml-1 text-xs opacity-70">C{classLabel}</span>}
+                                </Badge>
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
@@ -678,26 +940,188 @@ const Experiment6 = () => {
                       {/* Parameter Estimates */}
                       <div className="p-4 rounded-lg border-2 border-muted">
                         <h4 className="font-semibold mb-4">MLE Parameter Estimates</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {Object.entries(estimatedParams).map(([key, value]) => {
-                            if (key === 'likelihood' || key === 'logLikelihood') return null;
-                            const trueValue = testCases[selectedTestCase].trueParams[key];
-                            const error = trueValue ? Math.abs(value - trueValue) / trueValue * 100 : 0;
-                            return (
-                              <div key={key} className="p-3 bg-muted/50 rounded-lg">
-                                <div className="text-sm font-medium capitalize">{key}</div>
-                                <div className="text-lg font-bold text-primary">
-                                  {typeof value === 'number' ? value.toFixed(4) : value}
-                                </div>
-                                {trueValue && (
-                                  <div className="text-xs text-muted-foreground">
-                                    True: {trueValue} | Error: {error.toFixed(2)}%
+                        
+                        {/* Multi-class parameter grouping */}
+                        {testCases[selectedTestCase].isMultiClass ? (
+                          <div className="space-y-4">
+                            {testCases[selectedTestCase].distribution === 'gmm' && (
+                              <>
+                                <div>
+                                  <h5 className="text-sm font-medium mb-2 text-blue-600">Component 1</h5>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div className="p-3 bg-blue-50 rounded-lg">
+                                      <div className="text-sm font-medium">Mean</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.mean1?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.mean1} | 
+                                        Error: {Math.abs((estimatedParams.mean1 || 0) - testCases[selectedTestCase].trueParams.mean1) / testCases[selectedTestCase].trueParams.mean1 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-blue-50 rounded-lg">
+                                      <div className="text-sm font-medium">Variance</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.variance1?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.variance1} | 
+                                        Error: {Math.abs((estimatedParams.variance1 || 0) - testCases[selectedTestCase].trueParams.variance1) / testCases[selectedTestCase].trueParams.variance1 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-blue-50 rounded-lg">
+                                      <div className="text-sm font-medium">Weight</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.weight1?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.weight1} | 
+                                        Error: {Math.abs((estimatedParams.weight1 || 0) - testCases[selectedTestCase].trueParams.weight1) / testCases[selectedTestCase].trueParams.weight1 * 100}%
+                                      </div>
+                                    </div>
                                   </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+                                </div>
+                                <div>
+                                  <h5 className="text-sm font-medium mb-2 text-green-600">Component 2</h5>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    <div className="p-3 bg-green-50 rounded-lg">
+                                      <div className="text-sm font-medium">Mean</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.mean2?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.mean2} | 
+                                        Error: {Math.abs((estimatedParams.mean2 || 0) - testCases[selectedTestCase].trueParams.mean2) / testCases[selectedTestCase].trueParams.mean2 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-green-50 rounded-lg">
+                                      <div className="text-sm font-medium">Variance</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.variance2?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.variance2} | 
+                                        Error: {Math.abs((estimatedParams.variance2 || 0) - testCases[selectedTestCase].trueParams.variance2) / testCases[selectedTestCase].trueParams.variance2 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-green-50 rounded-lg">
+                                      <div className="text-sm font-medium">Weight</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.weight2?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.weight2} | 
+                                        Error: {Math.abs((estimatedParams.weight2 || 0) - testCases[selectedTestCase].trueParams.weight2) / testCases[selectedTestCase].trueParams.weight2 * 100}%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            
+                            {testCases[selectedTestCase].distribution === 'multiclass_normal' && (
+                              <>
+                                <div>
+                                  <h5 className="text-sm font-medium mb-2 text-blue-600">Class 1</h5>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div className="p-3 bg-blue-50 rounded-lg">
+                                      <div className="text-sm font-medium">Mean</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.mean1?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.mean1} | 
+                                        Error: {Math.abs((estimatedParams.mean1 || 0) - testCases[selectedTestCase].trueParams.mean1) / testCases[selectedTestCase].trueParams.mean1 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-blue-50 rounded-lg">
+                                      <div className="text-sm font-medium">Variance</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.variance1?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.variance1} | 
+                                        Error: {Math.abs((estimatedParams.variance1 || 0) - testCases[selectedTestCase].trueParams.variance1) / testCases[selectedTestCase].trueParams.variance1 * 100}%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div>
+                                  <h5 className="text-sm font-medium mb-2 text-green-600">Class 2</h5>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div className="p-3 bg-green-50 rounded-lg">
+                                      <div className="text-sm font-medium">Mean</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.mean2?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.mean2} | 
+                                        Error: {Math.abs((estimatedParams.mean2 || 0) - testCases[selectedTestCase].trueParams.mean2) / testCases[selectedTestCase].trueParams.mean2 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-green-50 rounded-lg">
+                                      <div className="text-sm font-medium">Variance</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.variance2?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.variance2} | 
+                                        Error: {Math.abs((estimatedParams.variance2 || 0) - testCases[selectedTestCase].trueParams.variance2) / testCases[selectedTestCase].trueParams.variance2 * 100}%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div>
+                                  <h5 className="text-sm font-medium mb-2 text-purple-600">Class 3</h5>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div className="p-3 bg-purple-50 rounded-lg">
+                                      <div className="text-sm font-medium">Mean</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.mean3?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.mean3} | 
+                                        Error: {Math.abs((estimatedParams.mean3 || 0) - testCases[selectedTestCase].trueParams.mean3) / testCases[selectedTestCase].trueParams.mean3 * 100}%
+                                      </div>
+                                    </div>
+                                    <div className="p-3 bg-purple-50 rounded-lg">
+                                      <div className="text-sm font-medium">Variance</div>
+                                      <div className="text-lg font-bold text-primary">
+                                        {estimatedParams.variance3?.toFixed(4)}
+                                      </div>
+                                      <div className="text-xs text-muted-foreground">
+                                        True: {testCases[selectedTestCase].trueParams.variance3} | 
+                                        Error: {Math.abs((estimatedParams.variance3 || 0) - testCases[selectedTestCase].trueParams.variance3) / testCases[selectedTestCase].trueParams.variance3 * 100}%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {Object.entries(estimatedParams).map(([key, value]) => {
+                              if (key === 'likelihood' || key === 'logLikelihood') return null;
+                              const trueValue = testCases[selectedTestCase].trueParams[key];
+                              const error = trueValue ? Math.abs(value - trueValue) / trueValue * 100 : 0;
+                              return (
+                                <div key={key} className="p-3 bg-muted/50 rounded-lg">
+                                  <div className="text-sm font-medium capitalize">{key}</div>
+                                  <div className="text-lg font-bold text-primary">
+                                    {typeof value === 'number' ? value.toFixed(4) : value}
+                                  </div>
+                                  {trueValue && (
+                                    <div className="text-xs text-muted-foreground">
+                                      True: {trueValue} | Error: {error.toFixed(2)}%
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                        
                         <div className="mt-4 p-3 bg-primary/10 rounded-lg">
                           <div className="text-sm font-medium">
                             Log-Likelihood: {estimatedParams.logLikelihood.toFixed(4)}
@@ -705,43 +1129,128 @@ const Experiment6 = () => {
                         </div>
                       </div>
 
-                      {/* Likelihood Convergence */}
-                      {likelihoodHistory.length > 0 && (
+                      {/* Data Visualization and Convergence */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {/* Scatter Plot */}
                         <div className="p-4 rounded-lg border-2 border-muted">
-                          <h4 className="font-semibold mb-4">Likelihood Convergence</h4>
-                          <div className="h-48 flex items-end justify-center space-x-1">
-                            {likelihoodHistory.map((likelihood, index) => {
-                              const minLikelihood = Math.min(...likelihoodHistory);
-                              const maxLikelihood = Math.max(...likelihoodHistory);
-                              const range = maxLikelihood - minLikelihood;
-                              
-                              // Calculate height percentage, with fallback for identical values
-                              let heightPercent;
-                              if (range === 0) {
-                                // If all values are the same, show equal height bars
-                                heightPercent = 50 + (index * 10); // Gradual increase
-                              } else {
-                                heightPercent = Math.max(10, ((likelihood - minLikelihood) / range) * 80 + 10);
-                              }
+                          <h4 className="font-semibold mb-4">Data Distribution</h4>
+                          <div className="h-48 relative border border-muted-foreground/20 rounded">
+                            {currentData.length > 0 && (() => {
+                              const values = currentData.map(d => d.y);
+                              const minVal = Math.min(...values);
+                              const maxVal = Math.max(...values);
+                              const range = maxVal - minVal;
+                              const padding = range * 0.1;
+                              const plotMin = minVal - padding;
+                              const plotMax = maxVal + padding;
+                              const plotRange = plotMax - plotMin;
                               
                               return (
-                                <div
-                                  key={index}
-                                  className="bg-primary rounded-t"
-                                  style={{
-                                    height: `${heightPercent}%`,
-                                    width: '12px'
-                                  }}
-                                  title={`Iteration ${index + 1}: ${likelihood.toFixed(4)}`}
-                                />
+                                <div className="w-full h-full p-2">
+                                  {currentData.slice(0, 200).map((point, index) => {
+                                    const x = (index / Math.min(200, currentData.length)) * 100;
+                                    const y = 100 - ((point.y - plotMin) / plotRange) * 100;
+                                    
+                                    // Color coding for multi-class
+                                    let color = '#3b82f6'; // default blue
+                                    if (testCases[selectedTestCase].isMultiClass && testCases[selectedTestCase].classLabels) {
+                                      const classLabel = testCases[selectedTestCase].classLabels![index];
+                                      if (classLabel === 0) color = '#3b82f6'; // blue
+                                      else if (classLabel === 1) color = '#10b981'; // green
+                                      else if (classLabel === 2) color = '#8b5cf6'; // purple
+                                    }
+                                    
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="absolute w-2 h-2 rounded-full opacity-70"
+                                        style={{
+                                          left: `${x}%`,
+                                          top: `${y}%`,
+                                          backgroundColor: color,
+                                          transform: 'translate(-50%, -50%)'
+                                        }}
+                                        title={`Value: ${point.y.toFixed(3)}${testCases[selectedTestCase].isMultiClass ? `, Class: ${testCases[selectedTestCase].classLabels?.[index]}` : ''}`}
+                                      />
+                                    );
+                                  })}
+                                  
+                                  {/* Y-axis labels */}
+                                  <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-muted-foreground">
+                                    <span>{plotMax.toFixed(1)}</span>
+                                    <span>{((plotMax + plotMin) / 2).toFixed(1)}</span>
+                                    <span>{plotMin.toFixed(1)}</span>
+                                  </div>
+                                  
+                                  {/* X-axis label */}
+                                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs text-muted-foreground">
+                                    Sample Index
+                                  </div>
+                                  
+                                  {/* Legend for multi-class */}
+                                  {testCases[selectedTestCase].isMultiClass && (
+                                    <div className="absolute top-2 right-2 flex flex-col gap-1">
+                                      {Array.from({ length: testCases[selectedTestCase].nClasses || 0 }, (_, classId) => {
+                                        const colors = ['#3b82f6', '#10b981', '#8b5cf6'];
+                                        return (
+                                          <div key={classId} className="flex items-center gap-1 text-xs">
+                                            <div 
+                                              className="w-2 h-2 rounded-full" 
+                                              style={{ backgroundColor: colors[classId] }}
+                                            />
+                                            <span>Class {classId}</span>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                </div>
                               );
-                            })}
+                            })()}
                           </div>
                           <div className="text-xs text-muted-foreground mt-2 text-center">
-                            Iteration Progress (Log-Likelihood values)
+                            {testCases[selectedTestCase].isMultiClass ? 'Multi-class Data Points' : 'Sample Data Points'}
                           </div>
                         </div>
-                      )}
+
+                        {/* Likelihood Convergence */}
+                        {likelihoodHistory.length > 0 && (
+                          <div className="p-4 rounded-lg border-2 border-muted">
+                            <h4 className="font-semibold mb-4">Likelihood Convergence</h4>
+                            <div className="h-48 flex items-end justify-center space-x-1">
+                              {likelihoodHistory.map((likelihood, index) => {
+                                const minLikelihood = Math.min(...likelihoodHistory);
+                                const maxLikelihood = Math.max(...likelihoodHistory);
+                                const range = maxLikelihood - minLikelihood;
+                                
+                                // Calculate height percentage, with fallback for identical values
+                                let heightPercent;
+                                if (range === 0) {
+                                  // If all values are the same, show equal height bars
+                                  heightPercent = 50 + (index * 10); // Gradual increase
+                                } else {
+                                  heightPercent = Math.max(10, ((likelihood - minLikelihood) / range) * 80 + 10);
+                                }
+                                
+                                return (
+                                  <div
+                                    key={index}
+                                    className="bg-primary rounded-t"
+                                    style={{
+                                      height: `${heightPercent}%`,
+                                      width: '12px'
+                                    }}
+                                    title={`Iteration ${index + 1}: ${likelihood.toFixed(4)}`}
+                                  />
+                                );
+                              })}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-2 text-center">
+                              Iteration Progress (Log-Likelihood values)
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -984,7 +1493,164 @@ for dist_name, accuracy in test_results.items():
                   </div>
 
                   <div>
-                    <h4 className="font-medium mb-2">5. Advanced MLE with Confidence Intervals</h4>
+                    <h4 className="font-medium mb-2">5. Multi-Class MLE Implementation</h4>
+                    <div className="bg-muted p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre>{`class MultiClassMLE:
+    def __init__(self, n_classes):
+        self.n_classes = n_classes
+        self.class_parameters = {}
+    
+    def estimate_gmm_parameters(self, data, n_components=2):
+        """Estimate Gaussian Mixture Model parameters using EM algorithm"""
+        from sklearn.mixture import GaussianMixture
+        
+        gmm = GaussianMixture(n_components=n_components, random_state=42)
+        gmm.fit(data.reshape(-1, 1))
+        
+        return {
+            'means': gmm.means_.flatten(),
+            'covariances': gmm.covariances_.flatten(),
+            'weights': gmm.weights_,
+            'converged': gmm.converged_,
+            'n_iter': gmm.n_iter_
+        }
+    
+    def estimate_multiclass_normal(self, data, labels):
+        """Estimate parameters for multi-class normal distributions"""
+        class_params = {}
+        
+        for class_id in range(self.n_classes):
+            class_data = data[labels == class_id]
+            if len(class_data) > 0:
+                mean = np.mean(class_data)
+                variance = np.var(class_data, ddof=1)  # Sample variance
+                class_params[class_id] = {
+                    'mean': mean,
+                    'variance': variance,
+                    'count': len(class_data),
+                    'prior': len(class_data) / len(data)
+                }
+        
+        return class_params
+    
+    def calculate_multiclass_likelihood(self, data, labels, params):
+        """Calculate likelihood for multi-class normal model"""
+        likelihood = 1.0
+        
+        for i, (x, label) in enumerate(zip(data, labels)):
+            if label in params:
+                mean = params[label]['mean']
+                variance = params[label]['variance']
+                prob = (1 / np.sqrt(2 * np.pi * variance)) * \\
+                       np.exp(-0.5 * (x - mean)**2 / variance)
+                likelihood *= prob
+        
+        return likelihood
+
+# Example usage for Gaussian Mixture Model
+np.random.seed(42)
+
+# Generate GMM data
+n_samples = 1000
+true_means = [2, 8]
+true_vars = [1, 1.5]
+true_weights = [0.6, 0.4]
+
+# Generate samples
+samples = []
+for _ in range(n_samples):
+    if np.random.random() < true_weights[0]:
+        samples.append(np.random.normal(true_means[0], np.sqrt(true_vars[0])))
+    else:
+        samples.append(np.random.normal(true_means[1], np.sqrt(true_vars[1])))
+
+samples = np.array(samples)
+
+# Fit GMM
+multiclass_mle = MultiClassMLE(n_classes=2)
+gmm_params = multiclass_mle.estimate_gmm_parameters(samples, n_components=2)
+
+print("Gaussian Mixture Model MLE Results:")
+print(f"Component 1 - Mean: {gmm_params['means'][0]:.4f} (True: {true_means[0]})")
+print(f"Component 1 - Variance: {gmm_params['covariances'][0]:.4f} (True: {true_vars[0]})")
+print(f"Component 1 - Weight: {gmm_params['weights'][0]:.4f} (True: {true_weights[0]})")
+print(f"Component 2 - Mean: {gmm_params['means'][1]:.4f} (True: {true_means[1]})")
+print(f"Component 2 - Variance: {gmm_params['covariances'][1]:.4f} (True: {true_vars[1]})")
+print(f"Component 2 - Weight: {gmm_params['weights'][1]:.4f} (True: {true_weights[1]})")
+print(f"Converged: {gmm_params['converged']}, Iterations: {gmm_params['n_iter']}")`}</pre>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-2">6. Multi-Class Normal Classification</h4>
+                    <div className="bg-muted p-4 rounded-lg font-mono text-sm overflow-x-auto">
+                      <pre>{`# Example for multi-class normal classification
+np.random.seed(42)
+
+# Generate multi-class data
+n_samples_per_class = 300
+class_means = [1, 5, 9]
+class_vars = [0.5, 1, 0.8]
+
+data = []
+labels = []
+
+for class_id, (mean, var) in enumerate(zip(class_means, class_vars)):
+    class_data = np.random.normal(mean, np.sqrt(var), n_samples_per_class)
+    data.extend(class_data)
+    labels.extend([class_id] * n_samples_per_class)
+
+data = np.array(data)
+labels = np.array(labels)
+
+# Estimate multi-class parameters
+multiclass_mle = MultiClassMLE(n_classes=3)
+class_params = multiclass_mle.estimate_multiclass_normal(data, labels)
+
+print("Multi-Class Normal MLE Results:")
+for class_id, params in class_params.items():
+    print(f"Class {class_id}:")
+    print(f"  Mean: {params['mean']:.4f} (True: {class_means[class_id]})")
+    print(f"  Variance: {params['variance']:.4f} (True: {class_vars[class_id]})")
+    print(f"  Prior: {params['prior']:.4f}")
+    print(f"  Count: {params['count']}")
+
+# Calculate overall likelihood
+likelihood = multiclass_mle.calculate_multiclass_likelihood(data, labels, class_params)
+log_likelihood = np.log(likelihood)
+
+print(f"\\nOverall Log-Likelihood: {log_likelihood:.4f}")
+
+# Classification function
+def classify_multiclass_normal(x, class_params):
+    """Classify a sample using multi-class normal MLE"""
+    posteriors = {}
+    
+    for class_id, params in class_params.items():
+        mean = params['mean']
+        variance = params['variance']
+        prior = params['prior']
+        
+        # Calculate likelihood
+        likelihood = (1 / np.sqrt(2 * np.pi * variance)) * \\
+                    np.exp(-0.5 * (x - mean)**2 / variance)
+        
+        # Calculate posterior (likelihood * prior)
+        posteriors[class_id] = likelihood * prior
+    
+    # Return class with highest posterior
+    return max(posteriors, key=posteriors.get)
+
+# Test classification
+test_samples = [0.5, 4.8, 9.2]
+for x in test_samples:
+    predicted_class = classify_multiclass_normal(x, class_params)
+    print(f"Sample {x:.1f} -> Class {predicted_class}")`}</pre>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium mb-2">7. Advanced MLE with Confidence Intervals</h4>
                     <div className="bg-muted p-4 rounded-lg font-mono text-sm overflow-x-auto">
                       <pre>{`from scipy.stats import chi2
 
