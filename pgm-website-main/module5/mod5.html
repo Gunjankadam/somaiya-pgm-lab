@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning and Taking Actions and Decisions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>
+    <script src="..\components\feedback.js" type="text/javascript" defer></script>
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+
+    .list-group-item:hover{
+      background-color: #dddddd;
+    }
+        ul li{
+            list-style-type: " -   ";
+        }
+    </style>
+</head>
+  <body>
+    <header-component></header-component>
+    <div class="container d-flex align-items-center justify-content-center">
+      <div class="container p-4 m-0">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <h1 style="font-size: 3rem; font-weight: 900;">Learning and Taking Actions and Decisions</h1>
+              </div>
+          </div>
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <a href="./mod5_part1.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Maximum Expected Utility</h1></a>
+              <p style="font-size: larger;">
+                Maximum Expected Utility (MEU) is a decision-making principle used in decision theory. It suggests selecting the action that maximizes the expected utility or value of an outcome. MEU combines the probabilities of different outcomes with their associated utilities or values to calculate the expected utility. By choosing the action with the highest expected utility, decision-makers aim to optimize their decisions in the face of uncertainty.
+                </p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod5_part1.html#expected_value_theory"><li class="list-group-item">Expected Value Theory</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part1.html#expected_utility_theory"><li class="list-group-item">Expected Utility Theory</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part1.html#differences_ev_eu"><li class="list-group-item">Difference between EV & EU</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part1.html#numericals_on_eu"><li class="list-group-item">Numericals Based on Expected Utility</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part1.html#utility_curve"><li class="list-group-item">Utility Curve</li></a>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr>
+          
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <a href="./mod5_part2.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Risk</h1></a>
+              <p style="font-size: larger;">
+                A risk is :
+                <ul>
+                    <li>an unwanted event which may or may not occur.</li>
+                    <li>the cause of an unwanted event which may or may not occur.</li>
+                    <li>the probability of an unwanted event which may or may not occur.</li>
+                    <li>the statistical expectation value of an unwanted event which may or may not occur.</li>
+                    <li>the fact that a decision is made under conditions of known probabilities ("decision under risk" as opposed to "decision under uncertainty")</li>
+                </ul>
+                </p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod5_part2.html#types_of_risks"><li class="list-group-item">Types of Risks</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part2.html#risk_loving"><li class="list-group-item">Risk Loving</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part2.html#risk_neutral"><li class="list-group-item">Risk Neutral</li></a>
+                  <a style="text-decoration: none;" href="./mod5_part2.html#risk_averse"><li class="list-group-item">Risk Averse</li></a>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <h1 style="color: #9A2929;">Influence Diagrams</h1>
+              <p>
+                An influence diagram (ID) is a compact graphical and mathematical representation of a decision situation. It is a generalization of a Bayesian network, in which not only probabilistic inference problems but also decision making problems (following the maximum expected utility criterion) can be modeled and solved. <br>
+                <br>
+                Let us understand the influence diagrams from the example below.
+                A budding entrepreneur, who just graduated from college. And he wants to decide to found a widget
+                making company or not?
+                There are possible two actions Found, Not Found
+                If he founds a company, then it’s a risky strategy
+                Let mo, m1, m2 be market conditions.
+                <img src="./images/image9.png" alt="Influence Diagrams" class="img-fluid m-3"><br>
+                <img src="./images/image16.png" alt="Influence Diagrams" class="img-fluid m-3"><br>
+                <img src="./images/image6.png" alt="Influence Diagrams" class="img-fluid m-3"><br>
+                <img src="./images/image15.png" alt="Influence Diagrams" class="img-fluid m-3"><br>
+
+                </p>
+            </div>
+            
+          </div>
+          <hr>
+
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <h1 style="color: #9A2929;">Decision Networks</h1>
+              <p style="font-size: larger;">
+                MEU: choose the action which maximizes the expected utility given the evidence
+                can directly operationalize this with decision networks. <br>
+                Bayesian Networks with nodes for utility and actions/ <br>
+                Lets us calculate the expected utility for each action. <br>
+                
+                New node types: <br>
+                Chance nodes (just like BNS) <br>
+                Actions (rectangles, cannot have parents, act as observed evidence) <br>
+                Utility node (diamond, depends on action and chance nodes) <br> <br>
+
+
+                Consider the following example: <br>
+                <img src="./images/image17.png" class="img-fluid m-3"><br>
+                <img src="./images/image8.png" class="img-fluid m-3"><br>
+
+
+              </p>
+            </div>
+            
+          </div>
+          <hr>
+        
+
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <a  href="./mod5_part3.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Causality</h1></a>
+              <p style="font-size: larger;">
+                It is common wisdom that a “good” BN structure should correspond to causality, in that an edge X → Y often suggests that X “causes” Y , either directly or indirectly. <br>
+                Although the two networks X → Y and Y → X are equivalent as probabilistic models, they will turn out to be very different as causal models. <br>
+              </p>
+            </div>
+            <div class="col-3">
+                <div class="card" style="width:100%">
+                  <div class="card-header">
+                    Contents
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <a style="text-decoration: none;" href="./mod5_part3.html#correlation_causation"><li class="list-group-item">Correlation and Causation</li></a>
+                    <a style="text-decoration: none;" href="./mod5_part3.html#causal_models"><li class="list-group-item">Causal Models</li></a>
+                  </ul>
+                </div>
+              </div>
+            
+          </div>
+
+          <hr>
+          
+      </div>
+      
+    </div>
+
+    <footer-component></footer-component>
+    <feedback-component></feedback-component>
+    <script type="text/javascript">
+
+
+      function showRandomAlert() {
+          console.log("showing alert")
+          document.getElementById("modal-button").click();
+      }
+
+      const randomDelay = 30000;
+      console.log(randomDelay)
+      setTimeout(showRandomAlert, randomDelay);
+
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

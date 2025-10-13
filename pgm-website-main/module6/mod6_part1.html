@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Application of Bayesian Networks</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <script src="..\components\footer.js" type="text/javascript" defer></script>
+        <script src="..\components\header.js" type="text/javascript" defer></script>  
+        <style>
+          body{
+            font-family: 'Poppins', sans-serif;
+              text-align: justify;
+          }
+    
+          #overlay {
+            position: absolute;
+            z-index:100;
+            width: 100%;
+            top: 40%;
+        }
+    
+        .list-group-item:hover{
+          background-color: #dddddd;
+        }
+        </style>
+    </head>
+<body>
+    
+    <header-component></header-component>
+
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Applications of Bayesian Networks</h1>
+    <div class="container mt-5" id="classification">
+        <h1 style="font-weight: 700;color: #9A2929">Classification</h1>
+        <p class="mt-3">Classification is a process of categorizing a given set of data into classes, It can be performed on both structured or unstructured data. The process starts with predicting the class of given data points. The classes are often referred to as target, label or categories. The classification predictive modeling is the task of approximating the mapping function from input variables to discrete output variables. The main goal is to identify which class/category the new data will fall into.</p>
+        <p>Bayesian Classification is based on Bayes' Theorem. Bayesian classifiers are the statistical classifiers. Bayesian classifiers can predict class membership probabilities such as the probability that a given tuple belongs to a particular class.</p>
+        <p>Bayesian classification provides a useful perspective for understanding and evaluating many learning algorithms. It turns out that naive Bayes classifiers, which are discussed in the next section, are closely related to the Bayesian classification framework.</p>
+        <p>Bayesian classifiers are the statistical classifiers. Bayesian classifiers can predict class membership probabilities such as the probability that a given tuple belongs to a particular class.</p>
+        <p style="font-size: 1.5rem;">Naive Bayes classifiers</p>
+        <p>Naive Bayes classifiers are a collection of classification algorithms based on Bayes’ Theorem. It is not a single algorithm but a family of algorithms where all of them share a common principle, i.e. every pair of features being classified is independent of each other. Naive Bayes classifiers have high accuracy and speed on large datasets.</p>
+        <p>For example: Suppose we have a dataset of weather conditions and corresponding target variable "Play". So using this dataset we need to decide that whether we should play or not on a particular day according to the weather conditions. So to solve this problem, we need to follow the below steps:</p>
+        <ul>
+            <li>Calculate Prior Probabilities for Play = Yes and Play = No</li>
+            <li>Calculate Likelihood Probabilities</li>
+            <li>Put these value in Bayes Formula and calculate posterior probabilities.</li>
+            <li>See which probability is higher, the higher probability will be our answer.</li>
+        </ul>
+        <p>First consider the below dataset:</p>
+        <img src="./images/img1.png" alt="img1" class="img-fluid" style="width: 60%;">
+        <p class="mt-3">Now if the weather is sunny, should the player play or not?</p>
+        <p>Frequency table for the weather conditions wiill be:</p>
+        <img src="./images/img2.png" alt="img2" class="img-fluid" style="width: 60%;">
+        <p class="mt-3">Here we need to calculate the probability of playing i.e. P(Yes | Sunny) and not playing i.e. P(No | Sunny) and check which probability is higher.</p>
+        <p>So using Bayes rule we can find the posterior probability from the above values as:</p>
+        <img src="./images/img3.png" alt="img3" class="img-fluid" style="width: 60%;">
+        <p class="mt-3">Applying Bayes'theorem:</p>
+        <p>P(Yes|Sunny)= P(Sunny|Yes)*P(Yes)/P(Sunny) </p>
+        <p>P(Sunny|Yes)= 3/10= 0.3</p>
+        <p>P(Sunny)= 0.35</p>
+        <p>P(Yes)=0.71</p>
+        <p>So P(Yes|Sunny) = 0.3*0.71/0.35= 0.60</p>
+        <p>Similarly,</p>
+        <p>P(No|Sunny)= P(Sunny|No)*P(No)/P(Sunny)</p>
+        <p>P(Sunny|NO)= 2/4=0.5</p>
+        <p>P(No)= 0.29</p>
+        <p>P(Sunny)= 0.35</p>
+        <p>So P(No|Sunny)= 0.5*0.29/0.35 = 0.41</p>
+        <p>So as we can see from the above calculation that P(Yes|Sunny)>P(No|Sunny)</p>
+        <p style="font-weight: bold;">So the player will play on a sunny day.</p>     
+    </div>
+    <div class="container mt-3" id="forecasting">
+        <h1 style="font-weight: 700;color: #9A2929">Forecasting</h1>
+        <p class="mt-3">Forecasting is the process of making predictions of the future based on past and present data and most commonly by analysis of trends.
+         A commonplace example might be estimation of some variable of interest at some specified future date. Prediction is a similar, but more general term. 
+         Both might refer to formal statistical methods employing time series, cross-sectional or longitudinal data, or alternatively to less formal judgmental methods. Usage can differ between areas of application: for example, in hydrology, the terms "forecast" and "forecasting" are sometimes reserved for estimates of values at certain specific future times, while the term "prediction" is used for more general estimates, such as the number of times floods will occur over a long period.</p>
+        <p style="font-weight: bold;">Bayesian Networks in Forecasting</p>
+        <p>Bayesian networks are a powerful tool for forecasting. They can be used to forecast the future state of a system, or to forecast the value of a variable. They can also be used to forecast the probability of a particular event occurring. Bayesian networks are particularly useful for forecasting when there is uncertainty in the data, or when the data is incomplete.</p>
+    </div>
+    <div class="container mt-5" id="decision_making">
+        <h1 style="font-weight: 700;color: #9A2929">Decision Making</h1>
+        <p class="mt-3">Decision making is the process of making choices by identifying a decision, gathering information, and assessing alternative resolutions. Using a step-by-step decision-making process can help you make more deliberate, thoughtful decisions by organizing relevant information and defining alternatives. This approach increases the chances that you will choose the most satisfying alternative possible.</p>
+        <p style="font-weight: bold;">Runway Excursion</p>
+        <p class="mt-3">A runway excursion is an incident involving only a single aircraft, in which the aircraft veers off or overruns the runway surface during either takeoff or landing. Runway excursions are the most frequent type of aviation accident, accounting for approximately 25% of all accidents and 50% of fatal accidents. Runway excursions are also the most common cause of aviation accidents in the United States.</p>
+        <p>Runway excursions are caused by a variety of factors, including:</p>
+        <ul>
+            <li>Runway conditions (e.g., snow, ice, water, slush, etc.)</li>
+            <li>Weather conditions (e.g., wind, rain, fog, etc.)</li>
+            <li>Runway surface (e.g., grooved, ungrooved, etc.)</li>
+            <li>Runway length</li>
+            <li>Runway slope</li>
+            <li>Runway lighting</li>
+            <li>Runway markings</li>
+            <li>Runway signage</li>
+            <li>Runway surface condition
+                <ul>
+                    <li>Wet</li>
+                    <li>Dry</li>
+                    <li>Contaminated</li>
+                </ul>
+            </li>
+            <li>Runway surface friction</li>
+        </ul>
+        <img src="./images/img4.png" alt="img4">
+        <br>
+        We will be considering the following factors for our decision making (The nodes in the network account for):
+        <ul>
+            
+
+            <li>Relevant Runway. It is a categorical variable: (A).</li>
+
+            <li>Crosswind component at threshold. Unit of measurements is knots: (B).</li>
+
+            <li>Speed of the aircraft which it is discretised to the nearest integer in the avionic: (kt).</li>
+
+            <li>Tailwind component at threshold. Unit of measurements is knots: (C).</li>
+
+            <li>Stabilised/unstabilised state at the approach: (D).</li>
+
+            <li>Maximum reverse thrust, which describes the maximum reverse thrust is applied during ground roll. It is measured in seconds: (E).</li>
+
+            <li>Autobrake state at landing, which has three values: low, medium, and no autobrake: (F).</li>
+
+            <li>Difference between the Indicated AirSpeed (IAS) and the Final Approach Speed (Vapp): (G)</li>
+
+            <li>Aircraft height at threshold, measured in feet (ft): (H).</li>
+        </ul>
+        
+        <p> Such networks are extensively used to find correlations, forecast excursions, etc.</p>
+        
+    </div>
+    <footer-component></footer-component>
+</body>
+</html>

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Download, BookOpen, Video, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const BayesServer = () => {
   return (
@@ -26,6 +27,32 @@ const BayesServer = () => {
           </p>
         </div>
 
+        <div className="content-section mb-6">
+          <h2 className="text-2xl font-semibold mb-4">Bayes Server Online</h2>
+          <p className="text-muted-foreground leading-relaxed mb-4">
+            Use the online version of Bayes Server directly below. For best performance, you can also open it in a new tab.
+          </p>
+          <AspectRatio ratio={16 / 9}>
+            <iframe
+              src="https://online.bayesserver.com/"
+              title="Bayes Server Online"
+              className="w-full h-full rounded-lg border border-muted/30"
+              allow="fullscreen; clipboard-read; clipboard-write"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </AspectRatio>
+          <div className="mt-2 text-sm">
+            <a
+              href="https://online.bayesserver.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline"
+            >
+              Open Bayes Server Online in a new tab
+            </a>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="content-section">
             <div className="inline-block p-3 rounded-lg bg-accent/10 mb-4">
@@ -36,8 +63,10 @@ const BayesServer = () => {
               Bayes Server is available for Windows, macOS, and Linux. Students can download the
               academic version free of charge.
             </p>
-            <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              Download Bayes Server
+            <Button asChild className="bg-accent hover:bg-black text-accent-foreground">
+              <a href="https://www.bayesserver.com/Download.aspx" target="_blank" rel="noopener noreferrer">
+                Download Bayes Server
+              </a>
             </Button>
           </div>
 
@@ -50,8 +79,10 @@ const BayesServer = () => {
               Comprehensive documentation covering all features, with examples and best practices
               for building and analyzing graphical models.
             </p>
-            <Button variant="outline" className="border-accent text-accent hover:bg-accent/10">
-              View Documentation
+            <Button asChild variant="outline" className="border-accent text-accent hover:bg-black hover:text-white">
+              <a href="https://www.bayesserver.com/docs/" target="_blank" rel="noopener noreferrer">
+                View Documentation
+              </a>
             </Button>
           </div>
         </div>
@@ -113,6 +144,13 @@ const BayesServer = () => {
               <li>• Performing inference and querying</li>
               <li>• Advanced modeling techniques</li>
             </ul>
+            <div className="mt-4">
+              <Button asChild variant="outline" className="border-accent text-accent hover:bg-black hover:text-white">
+                <a href="https://www.youtube.com/@bayesserver/playlists" target="_blank" rel="noopener noreferrer">
+                  Watch on YouTube
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="content-section">
@@ -129,6 +167,13 @@ const BayesServer = () => {
               <li>• Custom inference algorithms</li>
               <li>• Visualization utilities</li>
             </ul>
+            <div className="mt-4">
+              <Button asChild variant="outline" className="border-accent text-accent hover:bg-black hover:text-white">
+                <a href="https://www.bayesserver.com/code/" target="_blank" rel="noopener noreferrer">
+                  Visit Code Center
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </main>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning and Taking Actions and Decisions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Causality</h1>
+    <div class="container mt-5">
+        For standard probabilistic queries, it does not matter whether our model is causal or not. <br>
+
+        It matters only that it encodes the “right” distribution. The difference between causal models and probabilistic models arise when we care about interventions in the model —situations where we do not simply observe the values that variables take but can take actions that can manipulate these values.<br>
+
+        Thus, our goal is to isolate the specific issue of understanding causal relationships between variables.<br>
+
+        One approach to modeling causal relationships is using the notion of ideal interventions — interventions of the form do(Z := z), which force the variable Z to take the value z and have no other immediate effect.<br>
+
+        Intervention Queries:<br>
+        They correspond to a settings query where we set the variables in Z to take the value z, observe the values x for the variables in X, and wish to find the distribution over the variables Y. <br>
+
+
+    </div>
+    <div class="container mt-5" id="correlation_causation">
+        <h1 style="font-weight: 700;color: #9A2929">Correlation and Causation</h1>
+        <p class="mt-4">
+            A correlation between two variables X and Y can arise in multiple settings: <br>
+            ○ when X causes Y , <br>
+            ○ when Y causes X, or <br>
+            ○ when X and Y are both effects of a single cause. <br>
+            
+            
+            If we observe two variables X,Y to be probabilistically correlated in some observed distribution, what can we infer about the causal relationship between them? <br><br>
+            
+            
+            In practice, however, there is a huge set of possible latent variables, representing factors that exist in the world but that we cannot observe and often are not even aware of.<br>
+            A latent variable may induce correlations between the observed variables that do not correspond to causal relations between them, and hence forms a confounding factor in our goal of determining causal interactions.
+            There are many cases where correlations might also arise due to non-causal reasons. <br><br>
+            
+            The correlation between a pair of variables X and Y may be a consequence of multiple mechanisms, where some are causal, and others are not.<br>
+            To answer a causal query regarding an intervention at X, we need to disentangle these different mechanisms, and to isolate the component of the correlation that is due to the causal effect of X on Y. <br>
+
+
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="causal_models">
+        <h1 style="font-weight: 700;color: #9A2929">Causal Models</h1>
+        <p class="mt-4">
+            In the mutilated network BZ=z, we eliminate all incoming edges into each variable Zi ∈ Z, and set its value to be zi with probability 1. <br>
+            Based on this intuition, we can now define a causal model as a model that can answer intervention queries using the appropriate mutilated network. <br>
+
+            <img src="./images/image10.png" alt="Causal Models" class="img-fluid m-4"> <br>
+        </p>
+    </div>
+
+
+    <footer-component></footer-component>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

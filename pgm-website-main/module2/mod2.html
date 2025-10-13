@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bayesian Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>   
+    <script src="..\components\feedback.js" type="text/javascript" defer></script>
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+
+    .list-group-item:hover{
+      background-color: #dddddd;
+    }
+    </style>
+</head>
+  <body>
+    <header-component></header-component>
+    <div class="container d-flex align-items-center justify-content-center">
+      <div class="container p-4 m-0">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <h1 style="font-size: 4rem; font-weight: 900;">Bayesian Network Model and Inference</h1>
+              </div>
+          </div>
+          <div class="row p-0 mt-5">
+            <div class="col-9">
+              <a href="./mod2_part1.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Directed Graph Models</h1></a>
+              <p style="font-size: larger;">A Bayesian Network falls under the category of Probabilistic Graphical Modeling (PGM) technique that is used to compute uncertainties by using the concept of probability. Popularly known as Belief Networks, Bayesian Networks are used to model uncertainties by using Directed Acyclic Graphs (DAG).
+              </p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod2_part1.html#directed_acyclic_graphs"><li class="list-group-item">Directed Acyclic Graphs</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part1.html#naive_bayes"><li class="list-group-item">Naive Bayes Model</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part1.html#bayesian_network_model"><li class="list-group-item">Bayesian Network Model</li></a>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row p-0 mt-3">
+            <div class="col-9">
+              <a href="./mod2_part2.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Picking Variables</h1></a>
+              <p style="font-size: larger;">In this section, we will learn about the different types of variables that are used in Bayesian Networks. We will also learn about the different types of graphs that are used in Bayesian Networks.
+              <p style="font-size: larger;"></p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod2_part2.html#picking_probabilites"><li class="list-group-item">Picking Probabilities</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part2.html#d_seperation"><li class="list-group-item">D-Separation</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part2.html#cases_of_d_seperation"><li class="list-group-item">Cases of D-Separation</li></a>
+                </ul>
+              </div>
+            </div>
+  
+          </div>
+          <hr>
+          <div class="row p-0 mt-3">
+            <div class="col-9">
+              <a href="./mod2_part3.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Local Probabilistic Models</h1></a>
+              <p style="font-size: larger;">Probabilistic Graph Models, also known as Probabilistic Graphical Models (PGMs), are powerful mathematical frameworks that combine probability theory and graph theory to model complex systems involving uncertainty. PGMs provide a structured and intuitive way to represent and reason about uncertainty and dependencies among variables in a probabilistic manner. At the core of PGMs is the representation of a system as a graph, where nodes represent random variables, and edges denote probabilistic dependencies between variables. The graph captures the conditional dependencies among variables, allowing for efficient inference and reasoning.Probabilistic Graphical Models find applications in various domains, including artificial intelligence, machine learning, natural language processing, computer vision, bioinformatics, and more.</p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod2_part3.html#bayesian_network"><li class="list-group-item">Models</li></a>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row p-0 mt-3">
+            <div class="col-9">
+              <a href="./mod2_part4.html" style="text-decoration: none;"><h1 style="color: #9A2929;">Exact inference variable elimination:</h1></a>
+              <p style="font-size: larger;">Probabilistic Graph Models, also known as Probabilistic Graphical Models (PGMs), are powerful mathematical frameworks that combine probability theory and graph theory to model complex systems involving uncertainty. PGMs provide a structured and intuitive way to represent and reason about uncertainty and dependencies among variables in a probabilistic manner. At the core of PGMs is the representation of a system as a graph, where nodes represent random variables, and edges denote probabilistic dependencies between variables. The graph captures the conditional dependencies among variables, allowing for efficient inference and reasoning.Probabilistic Graphical Models find applications in various domains, including artificial intelligence, machine learning, natural language processing, computer vision, bioinformatics, and more.</p>
+            </div>
+            <div class="col-3">
+              <div class="card" style="width:100%">
+                <div class="card-header">
+                  Contents
+                </div>
+                <ul class="list-group list-group-flush">
+                  <a style="text-decoration: none;" href="./mod2_part4.html#variable_elimination_basics"><li class="list-group-item">Variable Elimination Basics</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part4.html#factor_marginalization"><li class="list-group-item">Factor Marginalization</li></a>
+                  <a style="text-decoration: none;" href="./mod2_part4.html#variable_elimination_resources"><li class="list-group-item"> Variable Elimination Resources</li></a>
+                  <!-- <a style="text-decoration: none;" href="./mod1_part3.html#markov_model"><li class="list-group-item">Inference with Structured CPDs</li></a> -->
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <footer-component></footer-component>
+    <feedback-component></feedback-component>
+    <script type="text/javascript">
+
+
+      function showRandomAlert() {
+          console.log("showing alert")
+          document.getElementById("modal-button").click();
+      }
+
+      const randomDelay = 30000;
+      console.log(randomDelay)
+      setTimeout(showRandomAlert, randomDelay);
+
+  </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

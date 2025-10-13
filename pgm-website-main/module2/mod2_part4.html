@@ -1,0 +1,124 @@
+</ul>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bayesian Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Variable Elimination</h1>
+
+    <div class="container mt-5" id="variable_elimination_basics">
+        <h1 style="font-weight: 700;color: #9A2929">Variable Elimination Basics</h1>
+        <p class="mt-4">
+            <br>
+            Dynamic programming techniques can be used to perform inference even for certain large and complex networks in a very reasonable time.
+            <br>
+            Considering the inference task in a very simple network
+            <br>
+            A → B → C → D
+            <br>
+            We first provide a phased computation, which uses results from the previous phase for the computation in the next phase.
+            <br>
+            We then reformulate this process in terms of a global computation on the joint distribution.
+Dynamic programming techniques can be used to perform inference even for certain large and complex networks in a very reasonable time.
+<br>
+Considering the inference task in a very simple network A → B →C → D. We first provide a phased computation, which uses results from the previous phase for the computation in the next phase.
+We then reformulate this process in terms of a global computation on the joint distribution.
+<br>
+Assume that our first goal is to compute the probability P(B), that is, the distribution
+over values b of B. Basic probabilistic reasoning (with no assumptions) gives
+
+          <img src="./images/img10.png" class="img-fluid"  >
+          <br>
+          <br>
+          Each number P(a) is in the CPD for A, and each number P(b | a) is in the CPD for B.
+          If A has k values and B has m values, the number of basic arithmetic operations
+          required is O(k x m): to compute P(b), we must multiply P(b | a) with P(a) for each of
+          the k values of A, and then add them up, that is, k multiplications and k - 1 additions;
+          This process must be repeated for each of the m values b.
+          Similarly for C , we have
+          <br>
+          <br>
+          <img src="./images/img11.png" class="img-fluid"  >
+          <br>
+          <br>
+          Similarly P(D) can be computed.
+          <br>
+          Consider the process of generating the entire joint and summing it out, which
+          requires that we generate k^n probabilities for the different events x1,..., xn.By the chain rule for Bayesian networks, the joint P(A,B,C,D) decomposes as -
+          <br>
+          <br>
+          <img src="./images/img12.png" class="img-fluid"  >
+          <br>
+          <br>
+          To compute P(D), we need to sum together all of the entries where D = d^1 and to (separately) sum together all of the entries where D = d^2. The exact computation that needs to be performed, for binary-valued variables A,B,C,D is
+          <br>
+          <img src="./images/img13.png" class="img-fluid"  >
+          Repeated terms can gain significant computational savings by computing terms once and storing them.
+          This procedure is said to be performing dynamic programming.
+          <br><br>
+
+        </p>
+    </div>
+    <div class="container mt-5" id="factor_marginalization">
+        <h1 style="font-weight: 700;color: #9A2929">Factor Marginalization</h1>
+        <p class="mt-4">
+            The key operation performed when computing the probability of some subset of variables is that of marginalizing out variables from a distribution.
+            <br>
+            Let X be a set of variables, and Y ∉ X a variable. Let φ(X,Y) be a factor.
+            <br>
+We define the factor marginalization of Y in φ , denoted ΣYφ , to be a factor ψ over X such that:
+<br>
+ψ(X) = ΣY φ(X,Y)
+This operation is also called summing out of Y in ψ.
+<br>
+The process of marginalizing a joint distribution P(X,Y) onto X in a Markov network is simply summing out the variables Y in the factor corresponding to P.
+<br>
+We can write,
+<br><br>
+<img src="./images/img14.png" class="img-fluid"  >
+<br>
+<br>
+<img src="./images/img15.png" class="img-fluid"  >
+
+
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="variable_elimination_resources">
+        <h1 style="font-weight: 700;color: #9A2929">Variable Elimination Resources</h1>
+        <p class="mt-4">
+            <a href="https://www.youtube.com/watch?v=dkeUDOzoC30">[Variable Elimination Via Inference]</a>
+        </p>
+    </div>
+
+    <footer-component></footer-component>
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

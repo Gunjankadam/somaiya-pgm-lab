@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Markov Network Model and Inference</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <script src="..\components\footer.js" type="text/javascript" defer></script>
+  <script src="..\components\header.js" type="text/javascript" defer></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+
+    #overlay {
+      position: absolute;
+      z-index: 100;
+      width: 100%;
+      top: 40%;
+    }
+
+    .list-group-item:hover {
+      background-color: #dddddd;
+    }
+
+    .custom {
+      box-shadow: 0 10px 10px 0;
+      border-radius: 5px;
+      width:300px;
+      height:320px;
+    }
+  </style>
+</head>
+
+<body>
+  <header-component></header-component>
+  <div class="container">
+    <div class="col-12 pt-5">
+      <h1 style="font-size: 3rem; font-weight: 900 ;color:#9A2929">Module-2</h1>
+      <hr>
+    </div>
+    <div class="row text-center">
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/dkeUDOzoC30" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/5UrKNJijw5w" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/Tx1Yatm3RRs" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="container">
+
+    <div class="col-12 pt-5">
+      <h1 style="font-size: 3rem; font-weight: 900 ;color:#9A2929">Module-3</h1>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/i3AkTO9HLXo" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/VNHeFp6zXKU" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/Zo3ieESzr4E" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/E4WcBWuQQws" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+        <div class="col-4 p-4">
+          <div class="custom">
+            <iframe width="300" height="315" src="https://www.youtube.com/embed/RWkHJnFj5rY"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col-4 p-4">
+          <div class="custom">
+            <iframe width="300" height="315" src="https://www.youtube.com/embed/9-sPm4CfcD0"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+  <div class="container">
+    <div class="col-12 pt-5">
+      <h1 style="font-size: 3rem; font-weight: 900 ;color:#9A2929">Module-4</h1>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-4 p-4">
+        <div class="custom">
+          <iframe width="300" height="315" src="https://www.youtube.com/embed/9-sPm4CfcD0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+    <hr>
+    <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>

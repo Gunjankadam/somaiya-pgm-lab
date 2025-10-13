@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction to Probability Theory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+        <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Introduction to Probability Theory</h1>
+
+    <div class="container mt-5" id="prob_theory">
+        <h1 style="font-weight: 700;color: #9A2929">Probability Theory</h1>
+        <p class="mt-4">
+            Probability theory is a branch of mathematics that allows us to reason about events that are inherently random. Another way to think about probability is in terms of repeatable statistical experiments. A statistical experiment is an action or occurrence that can have multiple different outcomes, all of which can be specified in but where the particular outcome that will occur cannot be specified in advance because it depends on random chance. 
+            <br>
+            <br>
+            In general, the probability theory is applied to two broad categories of applications:-
+            <ol>
+                <li style="font-weight: 600;">Generation/Prediction</li>
+                <ol type = "a">
+                    <li>Reasoning from causes to effects : Given a known set of causes and knowledge about how they interact, what are likely/unlikely outcomes</li>
+                    <li>For example: if you roll a fair 6-sided die, what is the probability of getting 1.</li>
+                </ol>
+            </ol>
+            <ol>
+                <li style="font-weight: 600;">Inference.</li>
+                <ol type="a">
+                    <li>Reasoning from effects to causes: Given knowledge about possible causes and how they interact, as well as some observed outcomes, which causes are likely/unlikely</li>
+                    <li>For example: observe patient's symptoms ⇒ determine disease</li>
+                </ol>
+            </ol>
+            
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="basic_concepts">
+        <h1 style="font-weight: 700;color: #9A2929">Basic Concepts in Probability</h1>
+        <p class="mt-4">           
+            <b>Sample Spaces</b> : The SAMPLE SPACE of a statistical experiment is the set of all possible outcomes
+            <br>
+            For example:
+            <ol>
+                <li>Random coin toss: S = {H, T}</li>
+                <li>Roll a die: S = {1, 2, 3, 4, 5, 6}</li>
+                <li>Choose a random number between 0 and 1: S = [0, 1]</li>
+            </ol>
+            <b>Event :</b> An EVENT is a subset of the sample space.An event is a collection of possible outcomes of a random experiment. There are two special events: the whole sample space S is called the certain or the sure event. The empty set ∅ is the null event. By definition, an impossible event has probability zero, and a certain event has probability one.
+            <br>
+            <br>
+            <b>Probability of an event:</b> every event E is assigned a probability P(E). “P(E) is the probability that event E is true”
+            <br>
+            <img src="./images/img1.png" class="img-fluid" alt="Probability of an event">
+            <br>
+            The probability of an event E, which we write as P(E), is simply the number of outcomes in E divided by number of outcomes in S:
+            <br>
+            <img src="./images/img2.png" class="img-fluid" alt="Probability of an event">
+            <br>
+            <b>For example: If you flip a fair coin once, what is the probability of getting a tail?</b>
+            <br>
+            Here S = {H,T} thus |S|=2, which is the total possible outcomes.
+            <br>
+            E => Event of getting tails, thus |E| = 1
+            <br>
+            Thus, P(E) = ½
+            <br>
+            <br>
+            <b>Conditional probability:</b> P(B|A) = conditional probability that B is true given that A is true
+            <br>
+            <img src="./images/img3.png" class="img-fluid" alt="Conditional probability">
+        </p>
+    </div>
+    <div class="container mt-5" id="random_var">
+        <h1 style="font-weight: 700;color: #9A2929">Random Variables and Joint Distribution        </h1>
+        <p class="mt-4">
+            <b>Random Variable:</b> A random variable is a 'random number', meaning a number which is determined by the outcome of a random experiment. 
+            <br>
+            Usually denoted X, Y, . . . . The range of X is the set of possible values for X.
+            <br>
+            Mathematically, X is a real-valued map on the sample space S: 
+            <br>
+            <img src="./images/img4.png" class="img-fluid" alt="Random Variable">
+            <br>
+            If the range of X is finite then we say that X is a simple random variable.
+            <br>
+            <br>
+            <b>Joint Distribution:</b> Given a collection of discrete random variables X = (X1, X2, . . . , Xn), let Ri be the range of Xi . Then the range of X is the Cartesian product R1 × · · · × Rn. Their joint pmf is the collection of probabilities P(X1 = x1, . . . , Xn = xn) for every point (x1, . . . , xn) in the range of X1, X2, . . . , Xn.
+            <br>
+            Suppose that we have two random variables X  and Y.If we want to know about the values that X and Y assume simultaneously during outcomes of a random experiment, we require a more complicated structure known as the joint cumulative distribution function of X and Y , defined by FXY (x, y) = P(X ≤ x, Y ≤ y)
+            <br>
+            Here, we call FX(x) and FY (y) the marginal cumulative distribution functions of FXY (x, y).
+            <br>
+            <br>
+            For example: 
+            <br>
+            We have a box of ten balls in which four are white, three are black, and three are red. One has to select five balls out of the box without replacement and count the number of white and red balls in the sample. What is the probability one observes two white and two red balls in the sample?
+            <br>
+            Here, the total number of outcomes is 10C5=252.
+            <br>
+            Since the box has four white balls, the number of ways of choosing two white is 4C2. Of the three red balls, one wants to choose two – the number of ways of doing that is 3C2. Last, the number of ways of choosing the remaining one black ball is 3C1. So the total number of ways of choosing two white, two red, and one black ball is the product,
+            <br>
+            P(X=2, Y=2)=4C2x3C2x3C1/10C5=54/252,
+            <br>
+            Where X=number of red balls selected, Y=number of white balls selected.
+            <br>
+            <img src="./images/img5.png" class="img-fluid" alt="Joint Distribution">
+        </p>
+    </div>
+    <div class="container mt-5" id="ind_conditional">
+        <h1 style="font-weight: 700;color: #9A2929">Independence and Conditional Independence</h1>
+        <p class="mt-4">
+        <b>Independence: </b>Two events A and B are INDEPENDENT EVENTS if 
+        Two events A, B are independent if P(A|B) = P(A).
+        P(A|B) = P(A) ⇐⇒ P(B|A) = P(B) ⇐⇒ P(A ∩ B) = P(A) P(B)
+        <br>
+        <br>
+        For Example: 
+        A box contains two coins: a regular coin and one fake two-headed coin (P(H)=1). I choose a coin at random and toss it twice. 
+        Define the following events.
+        <br>
+        A= First coin toss results in an H.
+        <br>
+        B= Second coin toss results in an H.
+        <br>
+        C= Coin 1 (regular) has been selected.
+        <br>
+        <br>
+        Find P(A|C),P(B|C),P(A∩B|C),P(A),P(B), and P(A∩B). Note that A and B are NOT independent, but they are conditionally independent given C.
+        <br>
+        We have P(A|C)=P(B|C)=12. Also, given that Coin 1 is selected, we have P(A∩B|C)=12.12=14. To find P(A),P(B), and P(A∩B), we use the law of total probability:
+        <br>
+        P(A)=P(A|C)P(C)+P(A|C^c)P(C^c)
+        <br>
+        =12⋅12+1⋅12
+        <br>
+        =34
+        <br>
+        Similarly, P(B)=34. For P(A∩B), we have
+        <br>
+        P(A∩B)=P(A∩B|C)P(C)+P(A∩B|Cc)P(Cc)=P(A|C)P(B|C)P(C)+P(A|Cc)P(B|Cc)P(Cc) (by conditional independence of A and B)
+        <br>
+        =12⋅12⋅12
+        <br>
+    </p>
+    </div>
+    <footer-component></footer-component>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning and Taking Actions and Decisions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Maximum Expected Utility</h1>
+
+    <div class="container mt-5" id="expected_value_theory">
+        <h1 style="font-weight: 700;color: #9A2929">Expected Value Theory</h1>
+        <p class="mt-4">
+            <h3 style="font-weight: 400;"> Expected Value : </h3>
+            In a gamble in which there is a p% chance of winning $X, the expected value is equal to pX.
+            If there is a p% chance of X and a q% chance of Y, then EV=pX+qY. Expected value theory says you should always choose the option with the highest expected value.
+            <br><br>
+            <h5 style="font-weight: 400;">Examples of Expected Value Theory :</h5>
+            10% chance of $90 *[If you are given probabilities that add up to less than 100%, you can assume the payoff otherwise equals 0]<br>
+            0.1 * 90 = $9 <br>
+            50% chance of $200 <br>
+            0.5*200 = $100 <br>
+
+            However, expected value theory conflicts with people’s intuitions sometimes and researchers also attribute this discrepancy to a flaw in the theory.<br><br>
+
+            Consider this example : <br> 
+            You have to choose between - <br>
+            (A) $1 million for sure OR (B) 50% chance of $3 million <br>
+            EV says you should prefer B to A. Many people prefer A to B. <br>
+            Why do people prefer A to B, in contrast to the advice given by EV theory? <br><br>
+
+            Here’s another example : <br>
+            A. 99% chance of $1 million OR B. $1 for sure<br>
+            Most people would choose the gamble A over the sure thing B.
+
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="expected_utility_theory">
+        <h1 style="font-weight: 700;color: #9A2929">Expected Utility Theory</h1>
+        <p class="mt-4">
+            <h3 style="font-weight: 400;"> Expected Utility : </h3>
+            Most decision researchers explain the pattern of choices in the first example by saying that the satisfaction we’d get from $3 million isn’t that much greater than the satisfaction we’d get from $1 million.<br>
+            We can construct a scale, called a utility scale in which we try to quantify the amount of satisfaction (UTILITY) we would derive from each option. <br>
+            Suppose you use the number 0 to correspond to winning nothing and 100 to correspond to winning $3 million. <br>
+            What number would correspond to winning $1 million?
+            <br>
+            <img src="./images/image14.png" class="img-fluid m-4">
+            <br>
+            Suppose you said 80. This means that the difference between what you have now and a million extra dollars is four times as great as the difference between a million and three million extra dollars. <br>
+            We can express the original choice between A and B in terms of these units (UTILES) instead of dollars.<br>
+            A) 80 utilities for sure 1 * 80 = 80 <br>
+            B) 50% chance of 100 utiles = 0.5 * 100 = 50<br>
+            You calculate Expected Utility by multiplying probabilities and utility amounts.<br>
+            <br>
+            (EU) = P(X) x amount of utiles.
+            <br><br>
+            So, EU(A)=80. EU(B)=50.<br>
+            Expected utility theory says if you rate $1 million as 80 utiles and $3 million as 100 utiles, you ought to choose option A.
+            <br><br>
+            <h4 style="font-weight: 300;">Diminishing Marginal Utility</h4>
+            EU theory captures the very important intuition that there is diminishing marginal utility  of money.
+            Definition of DMU : The value of an additional dollar DECREASES as total wealth INCREASES.
+            The change in your life when you go from 0 to 1 million is larger than the change in your life when you go from 1 million to 2 million.
+
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="differences_ev_eu">
+        <h1 style="font-weight: 700;color: #9A2929">Difference between EV & EU</h1>
+        <p class="mt-4">
+            In expected value theory, the correct choice is the same for all people. <br>
+            In expected utility theory, what is right for one person is not necessarily right for another person. <br>
+            Consider a decision of the following form: <br>
+            Option A: p% chance of $X <br>
+            Option B: q% chance of $Y <br> <br>
+
+            Once you specify what p, q, X, Y are, then EV theory will give VERY SPECIFIC ADVICE. It will say one of the following things: <br>
+            1. You should choose A <br>
+            2. You should choose B <br>
+            3. You should be indifferent between A and B <br> <br>
+
+            In contrast, EU theory says <br>
+            1. You might choose A <br>
+            2. You might choose B <br>
+            3. You might be indifferent between A and B <br>
+            It all DEPENDS on the utilities you assign to X and Y. <br>
+
+            Let us look at this through an example to understand better <br>
+            Option A: 90% chance of $100 <br>
+            Option B: 20% chance of $500 <br>
+            EV theory says that you SHOULD prefer B. <br>
+            EV(A)=$90. EV(B)=$100. <br>
+
+            EU theory says that before you can decide which one you prefer, you need to determine the UTILITY of $100 vs. $500. <br> <br> <br>
+
+            Person 1 might say: $500 is better than $100, but not five times better. It's really only three times better. <br>
+            So I'll rate $100 as 10 and $500 as 30.
+            (This person demonstrates the typical diminishing marginal utility for money.) <br>
+            Therefore, EU(A)=9 and EU(B)=6. <br>
+            EU theory would say that Person 1 should choose A. <br>
+
+            In contrast to EV theory (which says EVERYONE SHOULD CHOOSE THE SAME THING), EU theory says different people might choose different things. <br> <br>
+
+
+
+            Person 2 might say: I really want to buy a bat that costs $500. Winning $100 would be nice but wouldn't let me achieve that goal. But if I won $500, I could buy the bat. This person might think that $500 is MORE than five times as good as $100.  <br>
+            This person might assign a utility of 10 to $100 and a utility of 70 to $500. <br>
+            For this person,  <br> EU(A)=0.9*10 = 9  <br> EU(B)=0.2*70 = 14.  <br>
+            According to EU theory, Person 2 should choose B. <br> <br>
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="numericals_on_eu">
+      <h1 style="font-weight: 700;color: #9A2929">Numericals Based on Expected Utility</h1>
+      <p class="mt-4">
+        You have an opportunity to place a bet on the outcome of an upcoming race involving a certain female horse named Bayes: <br> If you bet x dollars and Bayes wins, you will have w0 + x, while if she loses you will have w0 - x, where w0 is your initial wealth.<br><br>
+        1. Suppose that you believe the horse will win with probability p and that your utility for wealth w is ln (w). Find your optimal bet as a function of p and w0. <br>
+        2. You know little about horse racing, only that racehorses are either winners or average, that winners win 90% of their races, and that average horses win only 10% of their races. After all the buzz you’ve been hearing, you are 90% sure that Bayes is a winner. What fraction of your wealth do you plan to bet? <br>
+        3. As you approach the betting window at the track, you happen to run into your uncle. He knows rather a lot about horse racing: he correctly identifies a horse’s true quality 95% of the time. You relay your excitement about Bayes. “Don’t believe the hype,” he states. “That Bayes mare is only an average horse.” What do you bet now (assume that the rules of
+        the track permits you to receive money only if the horse wins)? <br>
+
+        <br><br>
+
+        Let us first solve (1) <br>
+        The expected utility from betting x is: <br>
+        <img src="./images/image18.png" alt="Expected Utility 1" class="img-fluid m-2"><br>
+
+        Your objective is to choose x to maximize your expected utility. The
+        first order condition (derivative) w.r.t x is <br>
+
+        <img src="./images/image5.png" alt="Expected Utility 1" class="img-fluid m-2"><br>
+
+        <br><br>
+
+        Solving (2)
+        Your probability that Bayes will win can be determined as follows:
+        p = 0.9 * 0.9 + 0.1 * 0.1 = 0.82
+        Therefore by using the formula from part 1 - 
+        x* = w0 (2 * 0.82 - 1) = 0.64 * w0
+
+        <br><br>  
+
+        Solving (3)
+        Let q denote the true type of Bayes.
+        q = 1 (Bayes is a winner)
+        q = 0 (Bayes is an average)
+        Let s denote the signal from your uncle.
+        s = 1 (uncle asserts Bayes is a winner)
+        s = 0 (uncle asserts Bayes is average)
+        The uncle’s signal is accurate 95% of the time, i.e.,
+
+        <img src="./images/image11.png" alt="Expected Utility 1" class="img-fluid m-2"><br>
+
+        Using the formula from part 1 again, we obtain x* = 0.357w0 < w0. You would like to bet against Bayes, but this is not allowed, so the optimal choice is to bet nothing.
+
+
+
+      </p>
+    </div>
+
+    <div class="container mt-5" id="utility_curve">
+      <h1 style="font-weight: 700;color: #9A2929">Utility Curve</h1>
+      <img src="./images/image1.png" alt="Expected Utility 1" class="img-fluid m-2"><br>
+      <p class="mt-5">
+        A utility curve is a mathematical representation of an individual's preferences and the value they assign to different outcomes. It helps compare and rank options. Risk-neutral behavior, associated with a linear utility curve, means making decisions solely based on expected outcomes, without considering the associated risk or uncertainty. <br><br>
+      </p>
+    </div>
+
+    <footer-component></footer-component>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

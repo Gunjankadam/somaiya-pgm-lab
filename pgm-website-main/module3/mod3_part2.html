@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markov Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Markov Chains</h1>
+
+    <div class="container mt-5" id="applications">
+        <h1 style="font-weight: 700;color: #9A2929">Application Areas of Markov Chains</h1>
+        <p class="mt-4">
+            <br>
+            -	Statistics
+            <br>
+            -	Biology
+            <br>
+            -	Economics
+            <br>
+            -	Physics
+            <br>
+            -	Machine Learning
+            <br>
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="markov_chains">
+        <h1 style="font-weight: 700;color: #9A2929">Markov Chains</h1>
+        <p class="mt-4">           
+            <img src="./images/img24.png" class="img-fluid" >
+            <img src="./images/img25.png" class="img-fluid" >
+            Here’s a youtube playlist to better help you understand the concept of Markov Chains with a great example.
+            <br>
+            <a href="https://youtube.com/playlist?list=PLM8wYQRetTxBkdvBtz-gw8b9lcVkdXQKV">click here </a>
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="types">
+        <h1 style="font-weight: 700;color: #9A2929">Types of Markov Chain Classes</h1>
+        <p class="mt-4">
+            <br>
+            If arrow (transition) from State A to State B then
+            there is non-zero probability of transition
+            Sum of all outgoing probabilities is 1
+            <br>
+            <br> 
+            Ex: Random walk in Markov Chain starting from State 0
+            <br> 
+            • Possible Transitions from State 0: 0-0, 0-1
+            <br> 
+            • Possible Transitions from State 1: 1-2, 1-1
+            <br> 
+            • Possible Transitions from State 2: 2-1
+            <br> 
+            
+            • We can come to state 0 in some random walk
+            <br> 
+            where we are looping around 0 i.e., 0-0
+            • But we cannot come back to State 0 in some
+            random walk after leaving State 0
+            <br> 
+            • Transient State: The state where probability of
+            coming back to original state is less than 1
+            <br> 
+            <img src="./images/img26.png" class="img-fluid" >
+            <br>
+            <br>
+            Ex: Random walk in Markov Chain starting from State 1
+            <br>
+            • Possible Transitions from State 1: 1-2, 1-1
+            <br>
+            • Possible Transitions from State 2: 2-1
+            <br>
+            
+            • So, in any random walk, we are bound to come back
+            to State 1
+            <br>
+            • Recurrent State: The state where probability of
+            coming back to original state is 1
+            <br>
+            <img src="./images/img27.png" class="img-fluid" >
+<br>
+Ex: Random walk in Markov Chain starting from State 2
+<br><br>
+• Possible Transitions from State 2: 2-1
+<br>
+• Possible Transitions from State 1: 1-2, 1-1
+<br>
+
+• So, in any random walk, we are bound to come back to State 2
+<br>
+• Recurrent State: The state where probability of coming back to original state is 1
+<br>
+• So, both State 1 and State 2 are Recurrent States
+<br>
+• There is no incoming arrow to State 0, so it's not recurrent.
+<br>
+• In some states where it cannot be reached again from others, these are called the Reducible Markov Chain.
+
+<br>
+
+
+If we add an arrow from State2-State 0, then every state is reachable from every other state.
+Irreducible Chain: The Markov chain where all states are recurrent, and we can go to any states from any state.
+<br><br>
+<img src="./images/img28.png" class="img-fluid" >
+<br><br>
+Communicating Classes
+<br><br>
+Start State 0
+<br>
+Possible Transitions: 0-0
+<br>
+Thus, we can’t go to any other state
+<br>
+Start State 3
+<br>
+Possible Transitions: 3-3
+<br>
+Thus, we can’t go to any other state
+<br>
+Start State 1
+<br>
+Possible Transitions: 1-2, 1-0
+<br>
+Thus, we can go to State 2 and Come Back to State 1
+<br>
+But if we go to State 1-0, then we can't come back.
+<br>
+Start State 2
+<br>
+Possible Transitions: 2-1, 2-3
+<br>
+Thus, we can go to State 1 and Come Back to State 2
+<br>
+But if we go to State 2-3, then we can't come back.
+<br>
+Thus, State 0, State 3 are Self-Contained States.
+<br>
+Thus, State 0, State 3 are Self-Contained States.
+
+<br>
+According to state types, they are classified as
+Communicating Classes.
+<br>
+3 classes are mentioned in rectangles.
+Between any of these classes we can go from
+other.
+<br>
+<img src="./images/img29.png" class="img-fluid" >
+
+        </p>
+    </div>
+   
+    <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

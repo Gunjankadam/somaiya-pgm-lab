@@ -42,7 +42,11 @@ const Footer = () => {
                   University Website
                 </a>
               </li>
-            
+              <li>
+                <a href="https://kjsit.somaiya.edu.in/en/programme/computer-engineering" className="opacity-90 hover:opacity-100 transition-opacity">
+                  Department Portal
+                </a>
+              </li>
               <li>
                 <a href="https://www.kjsieit.in/sims/student/login.php" className="opacity-90 hover:opacity-100 transition-opacity">
                   Student Portal

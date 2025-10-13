@@ -1,49 +1,83 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Breadcrumb from "@/components/Breadcrumb";
-import { BookOpen, Code, GitBranch, Network } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BookOpen, Code, GitBranch, Network, Brain, Target } from "lucide-react";
 
-const theoryTopics = [
+const modules = [
   {
-    title: "Foundations of Probability",
+    id: 1,
+    title: "Introduction to Probabilistic Graphical Modeling",
     icon: BookOpen,
-    subtopics: [
-      "Random variables and probability distributions",
-      "Joint, marginal, and conditional probabilities",
-      "Bayes' theorem and conditional independence",
-      "Expectation and variance",
-    ],
+    path: "/theory/module1",
+    description: "Foundational concepts including probability theory, graph theory, and introduction to PGMs including Bayesian networks, Markov models, and Hidden Markov models.",
+    topics: [
+      "Introduction to Probability Theory",
+      "Introduction to Graphs", 
+      "Introduction to Probabilistic Graph Models"
+    ]
   },
   {
-    title: "Graph Theory Basics",
-    icon: Network,
-    subtopics: [
-      "Directed and undirected graphs",
-      "Paths, cycles, and connectivity",
-      "Directed acyclic graphs (DAGs)",
-      "Graph separation and d-separation",
-    ],
-  },
-  {
-    title: "Bayesian Networks",
+    id: 2,
+    title: "Bayesian Network Model and Inference",
     icon: GitBranch,
-    subtopics: [
-      "Representation using DAGs",
-      "Conditional probability tables (CPTs)",
-      "Local and global semantics",
-      "I-maps and perfect maps",
-    ],
+    path: "/theory/module2",
+    description: "Comprehensive coverage of Bayesian networks including directed graph models, modeling techniques, local probabilistic models, and exact inference methods.",
+    topics: [
+      "Directed Graph Models",
+      "Modeling",
+      "Local Probabilistic Models",
+      "Exact Inference Variable Elimination"
+    ]
   },
   {
-    title: "Inference Algorithms",
-    icon: Code,
-    subtopics: [
-      "Variable elimination",
-      "Belief propagation",
-      "Junction tree algorithm",
-      "Approximate inference methods",
-    ],
+    id: 3,
+    title: "Markov Network Model and Inference",
+    icon: Network,
+    path: "/theory/module3",
+    description: "Undirected graphical models including Markov networks, parameterization, Gibbs distribution, and inference techniques for undirected models.",
+    topics: [
+      "Undirected Graph Models",
+      "Exact Inference Variable Elimination"
+    ]
   },
+  {
+    id: 4,
+    title: "Hidden Markov Model and Inference",
+    icon: Brain,
+    path: "/theory/module4",
+    description: "Template-based graph models focusing on Hidden Markov Models, temporal models, and their applications in sequence analysis.",
+    topics: [
+      "Template Based Graph Model"
+    ]
+  },
+  {
+    id: 5,
+    title: "Learning and Taking Actions and Decisions",
+    icon: Target,
+    path: "/theory/module5",
+    description: "Learning in graphical models, parameter estimation, causality, utilities and decisions, and structured decision problems.",
+    topics: [
+      "Learning Graphical Models",
+      "Learning as Optimization",
+      "Parameter Estimation",
+      "Causality",
+      "Utilities and Decisions",
+      "Structured Decision Problems"
+    ]
+  },
+  {
+    id: 6,
+    title: "Applications",
+    icon: Code,
+    path: "/theory/module6",
+    description: "Real-world applications of probabilistic graphical models including Bayesian networks, Markov models, and HMMs in various domains.",
+    topics: [
+      "Application of Bayesian Networks",
+      "Application of Markov Models",
+      "Application of HMM"
+    ]
+  }
 ];
 
 const Theory = () => {
@@ -53,7 +87,13 @@ const Theory = () => {
       <Breadcrumb />
       
       <main className="flex-grow page-container">
-        <h1 className="text-4xl font-bold mb-8">Theory Section</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-4">Theory Section</h1>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            Comprehensive theoretical foundations of probabilistic graphical models, organized into six modules 
+            that build upon each other to develop a complete understanding of PGM concepts and applications.
+          </p>
+        </div>
 
         <div className="content-section mb-6">
           <h2 className="text-2xl font-semibold mb-4">Course Overview</h2>
@@ -69,95 +109,109 @@ const Theory = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {theoryTopics.map((topic, index) => (
-            <div key={index} className="content-section">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-lg bg-accent/10">
-                  <topic.icon className="w-6 h-6 text-accent" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {modules.map((module) => (
+            <Link key={module.id} to={module.path} className="block">
+              <div className="content-section hover:shadow-lg transition-shadow cursor-pointer h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 rounded-lg bg-accent/10">
+                    <module.icon className="w-6 h-6 text-accent" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">Module {module.id}</h3>
+                    <p className="text-sm text-muted-foreground">{module.title}</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold">{topic.title}</h3>
+                
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                  {module.description}
+                </p>
+
+                <div className="mb-4">
+                  <h4 className="font-semibold text-foreground mb-2 text-sm">Topics Covered:</h4>
+                  <ul className="space-y-1">
+                    {module.topics.slice(0, 3).map((topic, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <span className="text-accent font-bold mt-1">•</span>
+                        <span>{topic}</span>
+                      </li>
+                    ))}
+                    {module.topics.length > 3 && (
+                      <li className="text-xs text-accent">
+                        +{module.topics.length - 3} more topics
+                      </li>
+                    )}
+                  </ul>
+                </div>
+
+                <div className="text-accent text-sm font-medium">
+                  Learn More →
+                </div>
               </div>
-              <ul className="space-y-2">
-                {topic.subtopics.map((subtopic, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-muted-foreground">
-                    <span className="text-accent font-bold mt-1">•</span>
-                    <span>{subtopic}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </Link>
           ))}
         </div>
 
         <div className="content-section mb-6">
-          <h2 className="text-2xl font-semibold mb-4">Markov Networks</h2>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            Markov networks (also called Markov random fields) are undirected graphical models that
-            represent the joint probability distribution over a set of random variables. Unlike
-            Bayesian networks, they use undirected edges to capture symmetric dependencies.
-          </p>
-          <div className="bg-muted/30 p-4 rounded-lg">
-            <h4 className="font-semibold mb-2">Key Concepts:</h4>
-            <ul className="space-y-1 text-muted-foreground">
-              <li>• Cliques and maximal cliques</li>
-              <li>• Potential functions and factor graphs</li>
-              <li>• Hammersley-Clifford theorem</li>
-              <li>• Markov blanket and local independence</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="content-section mb-6">
-          <h2 className="text-2xl font-semibold mb-4">Temporal Models</h2>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            Temporal probabilistic models extend graphical models to represent and reason about
-            systems that evolve over time. These models are crucial for sequence analysis and
-            time-series prediction.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h2 className="text-2xl font-semibold mb-4">Learning Path</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-accent/5 p-4 rounded-lg border-l-4 border-accent">
-              <h4 className="font-semibold mb-2">Hidden Markov Models</h4>
+              <h4 className="font-semibold mb-2">Foundation (Modules 1-2)</h4>
               <p className="text-muted-foreground text-sm">
-                State-space models with hidden states and observable outputs, using the Markov
-                assumption for temporal dependencies.
+                Start with probability theory, graph theory, and Bayesian networks to build the fundamental understanding.
               </p>
             </div>
             <div className="bg-accent/5 p-4 rounded-lg border-l-4 border-accent">
-              <h4 className="font-semibold mb-2">Dynamic Bayesian Networks</h4>
+              <h4 className="font-semibold mb-2">Advanced Models (Modules 3-4)</h4>
               <p className="text-muted-foreground text-sm">
-                Generalization of HMMs that allow more complex dependencies between variables
-                across time slices.
+                Explore Markov networks and Hidden Markov Models for more complex modeling scenarios.
+              </p>
+            </div>
+            <div className="bg-accent/5 p-4 rounded-lg border-l-4 border-accent">
+              <h4 className="font-semibold mb-2">Applications (Modules 5-6)</h4>
+              <p className="text-muted-foreground text-sm">
+                Learn about learning algorithms, decision making, and real-world applications of PGMs.
               </p>
             </div>
           </div>
         </div>
 
         <div className="content-section">
-          <h2 className="text-2xl font-semibold mb-4">Learning in Graphical Models</h2>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            Learning involves estimating the parameters and/or structure of a graphical model from data.
-            This section covers both parameter learning (when structure is known) and structure learning
-            (discovering the graph from data).
-          </p>
-          <div className="space-y-3">
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h4 className="font-semibold mb-1">Maximum Likelihood Estimation</h4>
-              <p className="text-muted-foreground text-sm">
-                Finding parameters that maximize the likelihood of observed data
-              </p>
+          <h2 className="text-2xl font-semibold mb-4">Key Learning Outcomes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold mb-3">Theoretical Understanding</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Master probability theory and graph theory foundations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Understand different types of graphical models and their properties</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Learn inference algorithms and their computational complexity</span>
+                </li>
+              </ul>
             </div>
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h4 className="font-semibold mb-1">Expectation-Maximization Algorithm</h4>
-              <p className="text-muted-foreground text-sm">
-                Iterative method for learning parameters in the presence of hidden variables
-              </p>
-            </div>
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h4 className="font-semibold mb-1">Structure Learning</h4>
-              <p className="text-muted-foreground text-sm">
-                Discovering the graph structure using score-based or constraint-based approaches
-              </p>
+            <div>
+              <h4 className="font-semibold mb-3">Practical Skills</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Design and implement graphical models for real problems</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Apply learning algorithms to estimate model parameters</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-accent font-bold mt-1">•</span>
+                  <span>Make informed decisions using utility theory and decision trees</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

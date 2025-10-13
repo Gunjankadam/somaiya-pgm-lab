@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bayesian Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Bayesian Network Model and Inference</h1>
+
+    <div class="container mt-5">
+        <h1 style="font-weight: 700;color: #9A2929">Picking Variables</h1>
+        <p class="mt-4">
+            <br><br>
+            <div class="container" id="picking_probabilites">
+              <h4 style="font-weight: bolder;">Picking Probabilities</h4>
+              When we model a domain, there are many possible ways to describe the relevant entities and their attributes. 
+              <br><br>
+              Choosing which random variables to use in the model is often one of the hardest tasks, and this decision has implications throughout the model. A common problem is using ill-defined variables. 
+              <br>
+              For example, deciding to include the variable Fever to describe a patient in a medical domain seems fairly harmless.
+              <br>
+              Ex: 
+              <br>
+              1. The time of admission to the hospital
+              <br>
+              2. To occurrence of a fever over a prolonged period? Clearly, each of these might be a reasonable attribute to model, but the interaction of Fever with other variables depends on the specific interpretation we use.
+              <br>
+              One of the most challenging tasks in constructing a network manually is to obtain probabilities from
+              people. This task is somewhat easier in the context of causal models, since the parameters tend to be natural and more interpretable. 
+              <br><br>
+              Nevertheless, people generally dislike committing to an exact estimate of probability. 
+              One approach is to obtain estimates qualitatively, using abstract terms such as “common,” “rare,” and “surprising,” and then assign these to numbers using a predefined scale. 
+              This approach is fairly crude, and often can lead to misinterpretation. There are several approaches developed for assisting in obtaining probabilities from people. For example, one can visualize the probability of the event as an area (slice of a pie) or ask people how they would compare the probability in question to certain predefined lotteries. Nevertheless, probability obtaining is a long, difficult process, and one whose outcomes are not always reliable. The obtaining method can often influence the results and asking the same question using different phrasing can often lead to significant differences in the answer. 
+              <br>
+              For example, studies show that people’s estimates for an event such as “Death by disease” are
+              significantly lower than their estimates for this event when it is broken down into different possibilities
+              such as “Death from cancer,” “Death from heart disease,” and so on.
+            </div>
+            <br><br><br>
+            <div class="container" id="d_seperation">
+              <h4 style="font-weight: bolder;">D-Separation</h4>
+              In this section we explain the ideas that underlie the definition of d-separation. If you want to go to the section in which we give a formal definition of d-separation, <a href="https://www.andrew.cmu.edu/user/scheines/tutor/d-sep.html#formaldef">click here</a>
+              <br>
+              <br>
+              Although there are many ways to understand d-separation, we prefer using the ideas of active path and active vertex on a path (see the<a href="https://www.andrew.cmu.edu/user/scheines/tutor/d-sep.html#d-sepapplet2">active path applet).</a>
+              <br>
+              <br>
+              Recall the motivation for d-separation. The "d" in d-separation and d-connection stands for dependence. Thus if two variables are d-separated relative to a set of variables Z in a directed graph, then they are independent conditional on Z in all probability distributions such a graph can represent. Roughly, two variables X and Y are independent conditional on Z if knowledge about X gives you no extra information about Y once you have knowledge of Z. In other words, once you know Z, X adds nothing to what you know about Y.
+              <br>
+              <br>
+              Intuitively, a path is active if it carries information, or dependence. Two variables X and Y might be connected by lots of paths in a graph, where all, some, or none of the paths are active. X and Y are d-connected, however, if there is any active path between them. So X and Y are d-separated if all the paths that connect them are inactive, or, equivalently, if no path between them is active.
+              <br><br>
+              So now we need to focus on what makes a path active or inactive. A path is active when every vertex on the path is active. Paths, and vertices on these paths, are active or inactive relative to a set of other vertices Z. First let's examine when things are active or inactive relative to an empty Z. To make matters concrete, consider all of the possible undirected paths between a pair of variables A and B that go through a third variable C:
+              <br>
+              &nbsp;&nbsp;&nbsp;1) A --> C --> B
+              <br>
+              &nbsp;&nbsp;&nbsp;2) A <-- C <-- B
+              <br>
+              &nbsp;&nbsp;&nbsp;3) A <-- C --> B
+              <br>
+              &nbsp;&nbsp;&nbsp;4) A --> C <-- B
+              <br>
+              <br>
+              The first is a directed path from A to B through C, the second a directed path from B to A through C, and the third a pair of directed paths from C to A and from C to B. If we interpret these paths causally, in the first case A is an indirect cause of B, in the second B is an indirect cause of A, and in the third C is a common cause of A and B. All three of these causal situations give rise to association, or dependence, between A and B, and all three of these undirected paths are active in the theory of d-separation. If we interpret the fourth case causally, then A and B have a common effect in C, but no causal connection between them. In the theory of d-separation, the fourth path is inactive. Thus, when the conditioning set is empty, only paths that correspond to causal connection are active.
+            </div>
+            <br>
+            <div class="container" id="cases_of_d_seperation">
+              <h4 style="font-weight: bolder;">Cases of D-Separation</h4>
+              The concept of d-separation covers these three described cases. Basically, two sets of nodes are said to be d-separated from each other if there are no open information
+              (blocks paths) paths between them.
+              The concept of d-separation covers these three described cases. Basically, two sets of nodes are said to be d-separated from each other if there are no open information
+              (blocks paths) paths between them. 
+              <br>
+              <br>
+              D-separation is very useful because it allows us to drop non-existent dependencies from the posterior
+              distribution. And this can greatly simplify the final expression.
+              <br>
+              <br>
+              Active Triple:
+              <br>
+              <br>
+              1. Causal Chain: ABC and B is
+              unobserved to either direction
+              <br>
+              <br>
+  
+              2. Common Causes: ABC where B
+              is unobserved
+              <br>
+              <br>
+              3. Common Effect: ABC where B
+              or one of its descendants is
+              observed
+              <br>
+              <br>
+  
+              <img src="./images/img6.png" class="img-fluid"  >
+            </div>
+
+        </p>
+    </div>
+    <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

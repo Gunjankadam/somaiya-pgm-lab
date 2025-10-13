@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markov Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Undirected Graph Models</h1>
+
+    <div class="container mt-5" id="markov_models">
+        <h1 style="font-weight: 700;color: #9A2929">Markov Models</h1>
+        <p class="mt-4">
+            <br>
+            Markov models, also known as Markov chains, are a type of probabilistic graphical model that represents a sequence of events or states, where the probability of transitioning from one state to another depends only on the current state and is independent of past states. Markov models are named after the mathematician Andrey Markov, who developed the theory behind them.
+            <br>
+            Markov models are useful in modeling a variety of phenomena where one cannot naturally ascribe a directionality to the interaction between variables.
+            <br>
+            The undirected models also offer a different and often simpler perspective on directed models, in terms of both the independence structure and the inference task.
+            <br>
+In this section we will also see a combined framework that allows both directed and undirected edges.
+<br>
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="need_of_markov_models">
+        <h1 style="font-weight: 700;color: #9A2929">Why we need Markov Models</h1>
+        <p class="mt-4">           
+            <br>
+            Consider a scenario where we have four students who get together in pairs to work on the homework for a class.
+            <br>
+            1. Alice and Bob
+            <br>
+            2. Bob and Charles
+            <br>
+            3. Charles and Debbie
+            <br>
+            4. Debbie and Alice.
+            <br>
+            Alice and Charles just can’t stand each other, and Bob and Debbie had a relationship that ended badly.
+In this example, the professor accidentally misspoke in class, giving rise to a possible misconception among the students in the class. Each of the students in the class may subsequently have figured out the problem, perhaps by thinking about the issue or reading the textbook.
+<br>
+In subsequent study pairs, he or she may transmit this newfound understanding to his or her study partners.
+<br>
+We therefore have four binary random variables, representing whether the student has the misconception or not
+<br>
+Because Alice and Charles never speak to each other directly, we have that A and C are conditionally independent given B and D. Similarly, B and D are conditionally independent given A and C.
+
+<br>
+We can try to represent this distribution using Bayesian Network, but it encodes the independence assumption that (A ⊥ C | {B, D}). However, it also implies that B and D are independent given only A, but dependent given both A and C. Hence, it fails to provide a perfect map for our target distribution.
+Another attempt, shown in figure (c), is equally unsuccessful. It also implies that (A⊥ C | {B, D}), but it also implies that B and D are marginally independent.
+<br>
+<img src="./images/img1.png" class="img-fluid" >
+<br>
+(a)	Represents study pairs over 4 students
+<br>
+(b)	Represents first attempt at  bayesian network model
+<br>
+(c)	Represents second attempt at bayesian network model
+<br>
+All other candidate BN structures are also flawed, so that this distribution does not have a perfect map.
+Independencies (A ⊥ C | {B, D} and (B⊥ D | {A,C} cannot be naturally captured in a Bayesian network.
+Bayesian network requires that we ascribe a directionality to each influence.
+<br>
+In this case, the interactions between the variables seem symmetrical, and we would like a model that allows us to represent these correlations without forcing a specific direction to the influence.
+<br>
+Markov Network: A representation that implements this intuition is an undirected graph. As in a Bayesian Network, the nodes in the graph of a Markov network represent the variables, and the edges
+correspond to a notion of direct probabilistic interaction between the neighboring variables (an interaction that is not mediated by any other variable in the network).
+<br>
+In this case, the graph of figure (a), which captures the interacting pairs, is precisely the Markov network
+structure that captures our intuitions for this example.
+<br>
+The remaining question is how to parameterize this undirected graph.
+Because the interaction is not directed, there is no reason to use a standard CPD, where we represent the distribution over one node given others. Rather, we need a more symmetric parameterization.
+<br>
+Intuitively, what we want to capture is the affinities between related variables. 
+<br>
+For example, we might want to represent the fact that Alice and Bob are more likely to agree than to disagree.
+<br><br>
+We associate with A,B a general-purpose function, also called a factor:
+<br><br>
+
+<img src="./images/img2.png" class="img-fluid" >
+<br>
+Hence we introduce the Φ function. It is also known as the affinity function or the compatibility function or the soft constraint
+<img src="./images/img3.png" class="img-fluid" >
+<br><br>
+<img src="./images/img4.png" class="img-fluid" >
+<br><br>
+But this formula as normal probability won’t work here as the values are not in binary or continuous values. So, it's an unnormalized measure. Hence the tilde ~ on P.
+<br><br>
+<img src="./images/img5.png" class="img-fluid" >
+<br>
+<br>
+Z is called Partition Function or normalizing constant.
+<br>
+If we divide Unnormalized values by Z then we get Normalized Values.
+<br>
+Z = sum of all un-normalized values
+<br>
+<img src="./images/img6.png" class="img-fluid" >
+<br><br>
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="pairwise_markov">
+        <h1 style="font-weight: 700;color: #9A2929">Pairwise Markov Networks</h1>
+        <p class="mt-4">
+            <br><br>
+            A pairwise Markov Network is an undirected graph whose nodes are X1, X2,....Xn and each edge Xi--Xj is associated with a factor (potential) Φij (Xi--Xj)
+<br>
+
+            Consider a fully connected graph over X.
+            <br>
+            In this case, the graph specifies no conditional independence assumptions, so that we should be able to specify an arbitrary joint distribution over X.
+            <br>
+            If all of the variables are binary, each factor over an edge would have 4 parameters, and the total number of parameters in the graph would be 4(nc2)
+            <br><br>
+            However, the number of parameters required to specify a joint distribution over n binary variables is 2n-1.
+Thus, pairwise factors simply do not have enough parameters to encompass the space of joint distributions.
+<br>
+More intuitively, such factors capture only the pairwise interactions, and not interactions that involve
+combinations of values of larger subsets of variables.
+<br>
+<img src="./images/img7.png" class="img-fluid" >
+<br>
+<br>
+<img src="./images/img8.png" class="img-fluid" >
+<br><br>
+<img src="./images/img9.png" class="img-fluid" >
+<br>
+The key aspect to note about this definition is the fact that the two factors φ1 and φ2 are multiplied in a way that “matches up” the common partY .
+<br>
+<img src="./images/img10.png" class="img-fluid" >
+
+
+        </p>
+    </div>
+    <div class="container mt-5" id="general_gibbs">
+        <h1 style="font-weight: 700;color: #9A2929">General Gibbs Distribution</h1>
+        <p class="mt-4">
+            A distribution PΦ is a Gibbs distribution parameterized by a set of factors Φ = {φ1(D1),......, φK(DK)}
+            if it is defined as follows:
+            <br>
+            <img src="./images/img11.png" class="img-fluid" >
+            <br>
+            <br>
+            We say that a distribution PΦ with Φ = {φ1(D1), . . . , φK(DK)} factorizes over a Markov network H if each Dk (k = 1, . . . , K) is a complete subgraph of H.
+
+            <br>
+            <img src="./images/img12.png" class="img-fluid" >
+            <br>
+            <img src="./images/img12a.png" class="img-fluid" >
+            <br>
+            <br><br>
+            Gibbs Distribution with factors
+            <br>
+            <img src="./images/img14.png" class="img-fluid" >
+            <br>
+            <img src="./images/img15.png" class="img-fluid" >
+            <br>
+            <img src="./images/img16.png" class="img-fluid" >
+            <br>
+            <img src="./images/img17.png" class="img-fluid" >
+            <br>
+            <img src="./images/img18.png" class="img-fluid" >
+            This is called Family of Conditional distribution over X.
+        </p>
+    </div>
+    <div class="container mt-5" id="induced_markov_networks">
+        <h1 style="font-weight: 700;color: #9A2929">Induced Markov Networks</h1>
+        <p class="mt-4">
+            <br>
+            Induced Markov Network Hφ has an edge Xi-Xj, whenever there exists φ ε Φ such that Xi, Xj ε D m
+            <br>
+            <img src="./images/img19.png" class="img-fluid" >
+            <br>
+            <br>
+            <img src="./images/img20.png" class="img-fluid" >
+            <img src="./images/img21.png" class="img-fluid" >
+            <br>
+            
+            <br>
+            
+For any node X and Y in a network, the two important conditions are - 
+<br>
+If they appear together in some factor φ.
+<br>
+If there exists a factor φ(X, Y)
+<br>
+
+An edge in the network between two nodes means that those two nodes can influence each other directly. If X and Y occur in the same factor, then that means they can influence each other directly.
+<br>
+<br>
+Summary of Gibbs and Markov 
+<br>
+Gibbs Distribution represents distribution of products of factors.
+The Induced Markov network connects every pair of nodes that are in the same factor.
+Markov network structure doesn’t fully specify that factorization of P.
+
+
+        </p>
+    </div>
+    <div class="container mt-5" id="seperation">
+        <h1 style="font-weight: 700;color: #9A2929">Separation in Markov Models</h1>
+        <p class="mt-4">
+            <br>
+            Definition: X and Y are separated in H given Z if there is no active trail in H between X and Y given Z
+            <br>
+            <img src="./images/img22.png" class="img-fluid" >
+            <br>
+            I-map (Independence map) refers to a set of independence statements or conditional independence relationships that hold true in the model. It represents the graphical structure of the model in terms of the independence assumptions it makes.
+            <br><br>
+            If P factorizes over H, and SepH(X, Y |Z) then P satisfies (X ⊥ Y|Z)
+            <br>
+            <img src="./images/img23.png" class="img-fluid" >
+            <br><br>
+            If P satisfies I(H), we say that H is an I-map (Independency Map) of P
+If P factorizes over H, then H is an I-map of P
+
+<br>
+<br>
+
+Minimal I-Map
+<br>
+A minimal I-map is an i-Map without any redundant edges. But, a minimal I-Map still may not capture I(P)
+<br><br>
+Perfect I-Map
+<br>
+Bayesian Networks cannot be used to create either minimal I-Maps or perfect I-Maps accurately. Hence, Markov Models are used instead.
+Perfect Map:  I(H)=I(P)
+H perfectly captures independencies in P
+(The correlation between difficulty of a test (D), intelligence of the student (I) and the grades of the student (G) is to be created)
+<br>
+<br>
+I-Equivalence
+<br>
+<br>
+Two graphs G1 and G2 over X1, x2, ..., Xn are I-equivalent of I(G1)=I(G2)
+<br>
+Consider the following example - 
+<img src="./images/img23.png" class="img-fluid" >
+<br>
+<br>
+All these have dependency (X ⊥ Z |Y). Hence, these graphs are I-Equivalent
+
+        </p>
+    </div>
+
+    <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

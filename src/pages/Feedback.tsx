@@ -18,7 +18,7 @@ const Feedback = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.message) {
@@ -31,13 +31,40 @@ const Feedback = () => {
       return;
     }
 
-    toast.success("Thank you for your feedback!", {
-      description: "Your feedback has been submitted successfully.",
-    });
+    try {
+      // Create form data for FormSubmit
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('subject', formData.subject || 'PGM Lab Feedback');
+      formDataToSend.append('rating', rating.toString());
+      formDataToSend.append('message', formData.message);
+      formDataToSend.append('_subject', `PGM Lab Feedback from ${formData.name}`);
+      formDataToSend.append('_captcha', 'false');
+      formDataToSend.append('_template', 'table');
 
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setRating(0);
+      // Submit to FormSubmit
+      const response = await fetch('https://formsubmit.co/pgmvlab@gmail.com', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        toast.success("Thank you for your feedback!", {
+          description: "Your feedback has been submitted successfully.",
+        });
+
+        // Reset form
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        setRating(0);
+      } else {
+        throw new Error('Failed to submit feedback');
+      }
+    } catch (error) {
+      toast.error("Failed to submit feedback", {
+        description: "Please try again or contact us directly.",
+      });
+    }
   };
 
   return (

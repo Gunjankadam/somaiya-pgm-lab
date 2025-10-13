@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hidden Markov Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+    
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Template Bases Graph Model</h1>
+
+    <div class="container mt-5" id="hidden_markov_models">
+        <h1 style="font-weight: 700;color: #9A2929">Hidden Markov Models</h1>
+        <p class="mt-4">
+            <br>
+            Hidden Markov Models (HMMs) are probabilistic graphical models used to model sequences of observations, where the underlying states generating the observations are hidden or unobserved. HMMs assume that the states form a Markov chain, meaning the probability of transitioning to a new state only depends on the current state. HMMs are widely used for tasks like speech recognition, part-of-speech tagging, and gene prediction
+            <br><br>
+            Let us understand using an example,
+            <br>
+            Suppose Darshan can be either sad or happy according to the weather. We are not living in that town, but we can ask about the mood of Darshan over a phone call. So, Mood is an observed variable, and States are hidden variables to us.
+            <br>
+            <br>
+            <img src="./images/img1.png" class="img-fluid"  >
+            <br><br>
+            Here the hidden variables (the weather) form the markov chain and not the mood. Since here the mood is dependent on today’s weather and not yesterdays. However, there is a dependency on the weather today being dependent on the weather yesterday. 
+            <br>
+            Therefore, Hidden Markov Models = Hidden Markov Chain + Observed Variables
+            <br>
+            <br>The probability of the weather today given yesterday's weather is put in a matrix labeled the transitional matrix.
+            <br>
+            <img src="./images/img2.png" class="img-fluid"  >
+            <br>
+            The probabilities of the observed states (the mood) depending on the current weather is put in the matrix called the emission matrix.
+            <br><br>
+            <img src="./images/img3.png" class="img-fluid"  >
+            <br><br>
+            Now let’s see some problems where HMM can be used to solve them.
+            <br>
+            <br>
+            What is the probability of “Happy, Happy Sad” occurring provided that the weather on respective days was “Sunny Cloudy Sunny”?
+            <img src="./images/img4.png" class="img-fluid"  >
+            <br>
+            Here we make use of the transitional matrix, emission matrix and the new stationary matrix.
+            <br>
+            <br>
+            Stationary matrix is obtained by the equation : πA = π
+            <br>
+            <br>
+            Here in this case π = [0.218, 0.273, 0.509]
+            <br><br>
+            The need for a stationary matrix is that in Markov models, we need the previous state information to predict further, however we do not know the weather before the first day. Hence, the stationary matrix helps us substitute the probability. 
+            <br>
+            <br>
+            <img src="./images/img5.png" class="img-fluid"  >
+            <br>
+            <br>
+            Let us consider another example,
+            <br> 
+            If the states are hidden then what is the most likely weather sequence for a particular given mood sequence?
+            <br>
+            <img src="./images/img6.png" class="img-fluid"  >
+            <br>
+            The issue here is that there can be many permutations of the weather that could be possible. 
+            <br>
+            <img src="./images/img7.png" class="img-fluid"  >
+            <br><br>
+            Now we need to find the most probable sequence that is possible to happen, for that we need to find the probability for all of the possible sequences
+            <br>
+            <img src="./images/img8.png" class="img-fluid"  >
+            <br>
+            This process is however very extensive and instead we have two methods to easily solve it. 
+            <br>
+            a.	Forward Algorithm
+            <br>
+            b.	Viterbi Algorithm
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="forward_algorithm">
+        <h1 style="font-weight: 700;color: #9A2929">Forward Algorithm</h1>
+        <p class="mt-4">     
+            <br>      
+            Consider the same situation as before but instead of three weather conditions we only have two.
+            <img src="./images/img9.png" class="img-fluid"  >
+            <br>
+            If Sad is Y0 and Happy is Y1. 
+            <br>
+            What is the probability that Darshan have following mood sequence : (Sad, Sad, Happy)
+            <br>
+There can be 8 possible sequences of weather that could exist. 
+<br>
+<br>
+To reduce the time complexity of previous expressions we use the Forward Algorithm.
+<br>
+Some calculations are repeatedly done in previous probability expressions.
+<br>
+So, we will try to store the results of these repeated expressions.
+<br>
+Here’s a video that explains how to solve this problem using the algorithm.
+<a href="https://www.youtube.com/watch?v=9-sPm4CfcD0">https://www.youtube.com/watch?v=9-sPm4CfcD0</a>
+        </p>
+    </div>
+
+    <div class="container mt-5" id="advantages_of_HMM">
+        <h1 style="font-weight: 700;color: #9A2929">Advantages of HMM</h1>
+        <p class="mt-4">
+            <br>
+            -	The underlying theoretical basis is much more sound, elegant and easy to understand.
+            <br>
+            -	It is easier to implement and analyze.
+            <br>
+            -	HMM taggers are very simple to train (just need to compile counts from the training corpus).
+            <br>
+            -	Performs relatively well (over 90% performance on named entities).
+            <br>
+            -	Statisticians are comfortable with the theoretical base of HMM.
+            <br>
+            -	Liberty to manipulate the training and verification processes.
+            <br>
+            -	Mathematical / theoretical analysis of the results and processes.
+            <br>
+            -	Incorporates prior knowledge into the architecture with good design.
+            <br>
+            -	Initialize the model close to something believed to be correct.
+            <br>
+            -	It eliminates label bias problem
+            <br>
+            -	It has also been proved effective for a number of other tasks, such as speech recognition, handwriting recognition and sign language recognition.
+            <br>
+            -	Because each HMM uses only positive data, they scale well; since new words can be added without affecting learnt HMMs.
+            <br>
+            
+            <br>
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="disadvantages_of_HMM">
+        <h1 style="font-weight: 700;color: #9A2929">Disadvantages of HMM</h1>
+        <p class="mt-4">
+            <br>
+            -	The underlying theoretical basis is much more sound, elegant and easy to understand.
+            <br>
+            -	It is easier to implement and analyze.
+            <br>
+            -	HMM taggers are very simple to train (just need to compile counts from the training corpus).
+            <br>
+            -	Performs relatively well (over 90% performance on named entities).
+            <br>
+            -	Statisticians are comfortable with the theoretical base of HMM.
+            <br>
+            -	Liberty to manipulate the training and verification processes.
+            <br>
+            -	Mathematical / theoretical analysis of the results and processes.
+            <br>
+            -	Incorporates prior knowledge into the architecture with good design.
+            <br>
+            -	Initialize the model close to something believed to be correct.
+            <br>
+            -	It eliminates label bias problem
+            <br>
+            -	It has also been proved effective for a number of other tasks, such as speech recognition, handwriting recognition and sign language recognition.
+            <br>
+            -	Because each HMM uses only positive data, they scale well; since new words can be added without affecting learnt HMMs.
+            <br>
+            <br>
+        </p>
+    </div>
+<footer-component></footer-component>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

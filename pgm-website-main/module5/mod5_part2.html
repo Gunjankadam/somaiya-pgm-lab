@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning and Taking Actions and Decisions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Risk</h1>
+
+    <div class="container mt-5" id="types_of_risks">
+        <h1 style="font-weight: 700;color: #9A2929">Types of Risks</h1>
+        <p class="mt-4">
+            We can measure the degree of risk preferences. <br>
+            A person's degree of risk aversion can be measured as her willingness to pay (or to accept a lower expected utility) in order to avoid a risk. <br> <br>
+
+            <b>By theory (Arrow-Pratt measure):</b> <br>
+            Provided that an agent's utility function u(x) is twice continuously differentiable, her risk aversion at any point x can be measured as  <br>-u"(x)/u'(x) <br> Hence, a person with the utility function u1 is more risk averse at a point x than one with utility function u2 if and only it <br> -u1(x)/u1(x)-u2(x)/u2(x) <br> <br>
+
+            We can define 3 types of individuals by their risk attitudes: <br>
+            <ol>
+                <li>Risk-Loving</li>
+                <li>Risk-Neutral</li>
+                <li>Risk-Averse</li>
+            </ol>
+
+        </p>
+    </div>
+    
+    <div class="container mt-5" id="risk_loving">
+        <h1 style="font-weight: 700;color: #9A2929">Risk Loving</h1>
+        <p class="mt-4">
+            If a person's utility of the expected value of a gamble is less than their expected utility from the gamble itself, they are said to be risk-loving. <br>
+            Truly risk-loving people should be willing to stake all their assets on a roll of dice.  <br>
+            Convex Bernoulli utility function captures risk/loving behavior. <br>
+            <img src="./images/image4.png" alt="Risk Loving" class="img-fluid m-4"> <br>
+
+            <b>Example:</b> <br>
+            EU = Pheads* (Uhead)2 + Ptail* (Utail)2 = 0.5 * $102 +0.5 * $20² = $250 <br>
+            u(EV) = EV² = $152 = $225 <br>
+
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="risk_neutral">
+        <h1 style="font-weight: 700;color: #9A2929">Risk Neutral</h1>
+        <p class="mt-4">
+            If a person's utility of the expected value of a gamble is exactly equal to their expected utility from the gamble itself, they are said to be risk-neutral.<br>
+            Most financial institutions behave in a risk-neutral manner while investing. <br>
+            Linear Bernoulli utility function captures risk-neutral behavior. <br>
+            <img src="./images/image2.png" alt="Risk Loving" class="img-fluid m-4"> <br>
+            <b>Example:</b><br>
+            EU: = Pheads * k * Uhead + Ptail Utail  = 0.5 * 2 * $10 + 0.5 * 2 *  $20 = $30 <br>
+            u(EV) = 2 * EV = $15 * 2 =  $30 <br>
+
+
+        </p>
+    </div>
+
+    <div class="container mt-5" id="risk_averse">
+        <h1 style="font-weight: 700;color: #9A2929">Risk Averse</h1>
+        <p class="mt-4">
+            If a person's utility of the expected value of a gamble is greater than their expected utility from the gamble itself, they are said to be risk-averse. <br>
+            Truly risk-loving people should be willing to stake all their assets on a roll of dice. <br> 
+            Concave Bernoulli utility function captures risk-averse behavior. <br>            
+            <img src="./images/image3.png" alt="Risk Loving" class="img-fluid m-4"> <br>
+            <b>Example:</b><br>
+            EU = Pheads * log(Uhead) + Ptail * log(Utail) = 0.5 *  log($10) + 0.5 * log($20) = $1.15 <br>
+
+            u(EV) = log(EV) = log($15) = $1.176 <br>
+
+        </p>
+    </div>
+
+    
+    <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

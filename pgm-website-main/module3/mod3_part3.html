@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Markov Network Model and Inference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>  
+    <style>
+      body{
+        font-family: 'Poppins', sans-serif;
+        text-align: justify;
+      }
+
+      #overlay {
+        position: absolute;
+        z-index:100;
+        width: 100%;
+        top: 40%;
+    }
+    </style>
+  </head>
+  <body>
+       <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Conditioning </h1>
+
+    <div class="container mt-5" id="conditioning">
+        <h1 style="font-weight: 700;color: #9A2929">Conditioning Example</h1>
+        <p class="mt-4">
+            <br>
+            The conditioning algorithm is based on the fact that observing the value of certain variables can simplify the variable elimination process.
+            <br>
+            When a variable is not observed, we can use a case analysis to enumerate its possible values, perform the simplified VE computation, and then aggregate the results for the different values.
+            In terms of number of operations, the conditioning algorithm offers no benefit over the variable elimination algorithm.
+            <br>
+            However, it offers a time-space trade-off, which can be extremely important in cases where the factors created by variable elimination are too big to fit in main memory.
+            <br>
+            The conditioning algorithm is easiest to explain in the context of a Markov network.
+Let Φ be a set of factors over X and P be the associated distribution.
+We assume that any observations were already assimilated into Φ , so that our goal is to compute P(Y) for some set of query variables Y.
+For example, if we want to do inference in the Student network given the evidence G = g, we would reduce the factors reduced to this context, giving rise to the network structure.
+
+<img src="./images/img30.png" class="img-fluid" >
+
+
+        </p>
+    </div>
+
+   
+   <footer-component></footer-component>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

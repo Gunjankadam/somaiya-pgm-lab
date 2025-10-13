@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction to Graphs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="..\components\footer.js" type="text/javascript" defer></script>
+    <script src="..\components\header.js" type="text/javascript" defer></script>     <style>
+        body{
+          font-family: 'Poppins', sans-serif;
+          text-align: justify;
+        }
+      </style>
+</head>
+  <body>
+    <header-component></header-component>
+    <h1 style="font-size: 4rem; font-weight: 900;color: #9A2929;" class="p-4 text-center">Introduction to Graphs</h1>
+    <div class="container mt-5" id="nodes_edges">
+        <h1 style="font-weight: 700;color: #9A2929">Nodes and Edges</h1>
+        <p class="mt-4">
+            A graph is a structure that comprises a set of vertices and a set of edges. Directed graphical models can be represented by a graph with its vertices serving as random variables and directed edges serving as dependency relationships between them.
+            <br>
+            <img src="images/img6.png" alt="graph" class="img-fluid">
+            <br>
+            
+            <ol>
+                <li>A set V=V(G) whose elements are called vertices, points or nodes of G.</li> 
+                <li>A set E = E(G) of an unordered pair of distinct vertices called edges of G.</li>
+            </ol>
+            <br>
+            <img src="images/img7.png" alt="graph" class="img-fluid">
+            <br>
+            The direction of the edges determines the influence of one random variable on another. If the graph does not contain cycles (a number of vertices connected in a closed chain), it is usually referred to as a <b>Directed Acyclic Graph (DAG)</b>. Inference on these graphs may be performed exactly using algorithms such as Belief Propagation (BP) or variable elimination.
+        </p>
+    </div>
+    <div class="container mt-5" id="subgraphs">
+        <h1 style="font-weight: 700;color: #9A2929">Subgraphs</h1>
+        <p class="mt-4">
+            A subgraph G of a graph is graph G' whose vertex set and edge set subsets of the graph G. In simple words a graph is said to be a subgraph if it is a part of another graph.
+            <br>
+            <img src="images/img8.png" alt="graph" class="img-fluid">
+        </p>
+    </div>
+    <footer-component></footer-component>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>

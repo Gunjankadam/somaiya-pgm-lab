@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HMM Fix Test</title>
+</head>
+<body>
+    <h1>HMM Logical Mapping Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test the logical mapping functions
+        function isLogicalMatch(state, observation) {
+            const logicalMappings = {
+                'Normal': ['Low', 'Low Risk', 'Stable'],
+                'Alert': ['Low', 'Medium', 'Low Risk', 'Medium Risk'],
+                'Warning': ['Medium', 'High', 'Medium Risk', 'High Risk'],
+                'Emergency': ['High', 'Extreme', 'High Risk', 'Extreme Risk'],
+                'Critical': ['Extreme', 'Critical', 'Extreme Risk'],
+                'Recovery': ['Improving', 'Stable', 'Low']
+            };
+            
+            return logicalMappings[state]?.includes(observation) || false;
+        }
+
+        function isNearMatch(state, observation) {
+            const nearMappings = {
+                'Normal': ['Medium', 'Medium Risk'],
+                'Alert': ['High', 'High Risk'],
+                'Warning': ['Low', 'Extreme', 'Low Risk', 'Extreme Risk'],
+                'Emergency': ['Medium', 'Medium Risk'],
+                'Critical': ['High', 'High Risk'],
+                'Recovery': ['Low', 'Medium', 'Low Risk', 'Medium Risk']
+            };
+            
+            return nearMappings[state]?.includes(observation) || false;
+        }
+
+        // Test cases
+        const testCases = [
+            { obs: 'Low', expected: 'Normal' },
+            { obs: 'Medium', expected: 'Alert' },
+            { obs: 'High', expected: 'Warning' },
+            { obs: 'Extreme', expected: 'Emergency' }
+        ];
+
+        const states = ['Normal', 'Alert', 'Warning', 'Emergency'];
+        const results = [];
+
+        testCases.forEach(testCase => {
+            let bestState = 'Normal';
+            let bestScore = 0;
+
+            states.forEach(state => {
+                let score = 0;
+                if (isLogicalMatch(state, testCase.obs)) {
+                    score = 2; // High score for logical match
+                } else if (isNearMatch(state, testCase.obs)) {
+                    score = 1; // Medium score for near match
+                }
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestState = state;
+                }
+            });
+
+            results.push({
+                observation: testCase.obs,
+                predicted: bestState,
+                expected: testCase.expected,
+                correct: bestState === testCase.expected,
+                score: bestScore
+            });
+        });
+
+        // Display results
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = results.map(result => `
+            <div style="margin: 10px; padding: 10px; border: 1px solid #ccc;">
+                <strong>${result.observation}</strong> → 
+                <span style="color: ${result.correct ? 'green' : 'red'}">${result.predicted}</span>
+                (Expected: ${result.expected}, Score: ${result.score})
+                ${result.correct ? '✓' : '❌'}
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>
